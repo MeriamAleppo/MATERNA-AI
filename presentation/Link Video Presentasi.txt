@@ -1,0 +1,20 @@
+================================================================================
+DOKUMENTASI LINK VIDEO PRESENTASI UTS DATA MINING
+================================================================================
+Nama Mahasiswa : Nayyara Rauf Ghani Al Khayri
+NIM            : A11.2024.16055
+Judul Proyek   : MATERNA-AI: Multi-Tier Clinical Decision Support System for
+                 Early Preeclampsia Prediction & Risk Trajectory
+
+Link Video Presentasi (YouTube / Google Drive):
+[Silakan tempelkan URL Video Presentasi Anda di sini sebelum pengumpulan]
+Contoh: https://youtu.be/xxxx_materna_ai_uts_16055
+
+Outline Pemaparan Presentasi (Durasi 7 - 10 Menit):
+1. [00:00 - 01:30] Pendahuluan, Visi Produk MATERNA-AI, & Pembagian Brainstorming Fitur (MHS 1, 2, 3)
+2. [01:30 - 03:00] Kriteria 1 UTS: Identifikasi Masalah, Urgensi Klinis, Rumusan & Tujuan Penelitian
+3. [03:00 - 04:30] Kriteria 2 UTS: Studi Literatur (5 Jurnal Acuan), Research Gap, & Kontribusi Kebaruan
+4. [04:30 - 06:30] Kriteria 3 UTS: Perancangan Dataset (N=1.200), 30 Atribut Multi-Tier, & Data Cleaning
+5. [06:30 - 08:30] Demo Notebook & Evaluasi 4 Model (Decision Tree, KNN, Naive Bayes, SVM) + Ablasi Fitur
+6. [08:30 - 10:00] Kesimpulan & Rekomendasi Klinis Berbasis POGI
+================================================================================

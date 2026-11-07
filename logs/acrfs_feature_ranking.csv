@@ -1,0 +1,31 @@
+feature,clinical_label,tier_group,pearson_abs,mutual_info,chi2_stat,pearson_norm,mi_norm,chi2_norm,acrfs_score,rank
+proteinuria_ordinal,Proteinuria Dipstick,Tier 2 (Biomarker & Doppler),0.7019,0.2694,246.9408,0.9485,0.754,1.0,0.9008,1
+delta_map,Lonjakan MAP (ΔMAP),Trajectory ANC,0.739,0.3569,52.1857,1.0,1.0,0.2109,0.737,2
+urine_pcr,Rasio Protein/Kreatinin Urin,Tier 2 (Biomarker & Doppler),0.649,0.292,64.5415,0.8749,0.8176,0.261,0.6512,3
+map_mmhg,Mean Arterial Pressure (MAP),Tier 1 (Klinis Dasar),0.6728,0.2922,34.2206,0.9079,0.8181,0.1382,0.6214,4
+delta_sbp,Lonjakan Sistolik (ΔSBP),Trajectory ANC,0.6338,0.2423,31.4869,0.8538,0.6777,0.1271,0.5528,5
+sgot_ast_u_l,Enzim Hepar SGOT (AST),Tier 2 (Biomarker & Doppler),0.5886,0.2311,53.8042,0.7909,0.646,0.2175,0.5515,6
+delta_dbp,Lonjakan Diastolik (ΔDBP),Trajectory ANC,0.6237,0.2353,28.0101,0.8397,0.6579,0.113,0.5369,7
+utapi_doppler,Doppler Arteri Uterina (UtAPI),Tier 2 (Biomarker & Doppler),0.5944,0.2306,38.7822,0.7991,0.6448,0.1566,0.5335,8
+sgpt_alt_u_l,Enzim Hepar SGPT (ALT),Tier 2 (Biomarker & Doppler),0.5706,0.2191,44.97,0.7659,0.6122,0.1817,0.52,9
+systolic_bp,Tensi Sistolik,Tier 1 (Klinis Dasar),0.5706,0.2263,28.075,0.7659,0.6327,0.1133,0.5039,10
+diastolic_bp,Tensi Diastolik,Tier 1 (Klinis Dasar),0.5776,0.2134,30.8145,0.7757,0.5964,0.1244,0.4988,11
+platelet_count_k_ul,Hitung Trombosit,Tier 2 (Biomarker & Doppler),0.5543,0.1876,19.7773,0.7432,0.5237,0.0796,0.4489,12
+uric_acid_mg_dl,Asam Urat Serum,Tier 2 (Biomarker & Doppler),0.5391,0.1772,27.6495,0.7221,0.4944,0.1115,0.4427,13
+weight_gain_kg_per_week,Laju Kenaikan BB,Trajectory ANC,0.523,0.1582,26.7915,0.6998,0.4411,0.1081,0.4163,14
+edema_progression,Progresivitas Edema,Trajectory ANC,0.4385,0.0821,104.0423,0.5823,0.2268,0.421,0.41,15
+serum_creatinine_mg_dl,Kreatinin Serum,Tier 2 (Biomarker & Doppler),0.4976,0.1379,24.026,0.6645,0.384,0.0969,0.3818,16
+pre_pregnancy_bmi,IMT Pra-Kehamilan,Tier 1 (Klinis Dasar),0.3831,0.0762,14.1872,0.5053,0.2103,0.057,0.2575,17
+maternal_age,Usia Ibu,Tier 1 (Klinis Dasar),0.3184,0.111,11.188,0.4153,0.3083,0.0448,0.2562,18
+prev_pe_history,Riwayat Preeklamsia,Tier 1 (Klinis Dasar),0.2753,0.0292,76.751,0.3554,0.0779,0.3105,0.2479,19
+family_htn_history,Riwayat Hipertensi Keluarga,Tier 1 (Klinis Dasar),0.2613,0.0326,55.1842,0.3361,0.0876,0.2231,0.2156,20
+sbp_trimester1,Sistolik Baseline T1,Trajectory ANC,0.2399,0.0951,7.2886,0.3063,0.2635,0.029,0.1996,21
+dbp_trimester1,Diastolik Baseline T1,Trajectory ANC,0.2292,0.097,7.756,0.2914,0.2687,0.0309,0.197,22
+lila_cm,Lingkar Lengan Atas (LILA),Tier 1 (Klinis Dasar),0.2597,0.029,6.4071,0.3338,0.0775,0.0255,0.1456,23
+gestational_age_weeks,Usia Kehamilan,Tier 1 (Klinis Dasar),0.1786,0.0453,2.2293,0.221,0.1233,0.0085,0.1176,24
+nullipara,Status Nullipara,Tier 1 (Klinis Dasar),0.163,0.0297,18.3599,0.1994,0.0795,0.0739,0.1176,25
+pulse_pressure,Pulse Pressure,Tier 1 (Klinis Dasar),0.2067,0.025,4.496,0.2601,0.0661,0.0177,0.1146,26
+parity,Paritas,Tier 1 (Klinis Dasar),0.1457,0.0244,7.4089,0.1753,0.0645,0.0295,0.0898,27
+gest_diabetes,Komorbid Diabetes Gestasional,Tier 1 (Klinis Dasar),0.1367,0.0015,18.9411,0.1628,0.0,0.0763,0.0797,28
+gravida,Gravida (Kehamilan ke-),Tier 1 (Klinis Dasar),0.1481,0.0026,7.8091,0.1787,0.0033,0.0312,0.071,29
+preg_interval_yrs,Jarak Kehamilan,Tier 1 (Klinis Dasar),0.0196,0.0479,0.1204,0.0,0.1305,0.0,0.0435,30

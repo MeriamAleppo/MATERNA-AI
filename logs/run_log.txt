@@ -1,0 +1,97 @@
+================================================================================
+MATERNA-AI: MULTI-TIER CLINICAL DECISION SUPPORT SYSTEM FOR PREECLAMPSIA
+UTS DATA MINING EXECUTION LOG (v2.5 FULL UPGRADE)
+Mahasiswa : Nayyara Rauf Ghani Al Khayri (NIM: A11.2024.16055)
+Timestamp : 2026-10-31 01:52:13
+================================================================================
+
+[1] AUTOMATED CLINICAL DATA AUDITING, BOUNDARY VALIDATION & SMART IMPUTATION
+    - Jumlah baris awal (raw)                  : 1212 baris
+    - Duplikat patient_id terdeteksi           : 12 baris (DIHAPUS)
+    - Jumlah baris bersih                      : 1200 pasien unik
+    - Imputasi median per Gestational Age      : {'lila_cm': 19, 'urine_pcr': 27, 'uric_acid_mg_dl': 31, 'utapi_doppler': 48}
+    - Validasi konsistensi obstetrik & tensi   : Obstetrik=94, Tensi=0
+    - Total missing setelah imputasi           : 0
+
+[2] HASIL KOMPARASI & OPTIMASI 6 MODEL (4 STANDAR + 2 ENSEMBLE DENGAN SMOTE-NC)
+    * Decision Tree (Standar (4 Model Inti)):
+      - Best Hyperparameters : {'clf__criterion': 'entropy', 'clf__max_depth': 4, 'clf__min_samples_split': 6, 'clf__use_smote_nc': True}
+      - CV ROC-AUC (5-Fold)  : 0.9536
+      - Test Accuracy        : 92.08%
+      - Test Recall (Sens.)  : 90.28%  (Target PRD >= 88.0%)
+      - Test Specificity     : 92.86%  (Target PRD >= 80.0%)
+      - Test F1-Score        : 87.25%
+      - Test ROC-AUC         : 0.9709  (Target PRD >= 0.8800)
+      - Test PR-AUC          : 0.8917
+      - Confusion Matrix     : TN=156, FP=12, FN=7, TP=65
+    * KNN (Standar (4 Model Inti)):
+      - Best Hyperparameters : {'clf__n_neighbors': 15, 'clf__p': 2, 'clf__weights': 'distance', 'clf__use_smote_nc': True}
+      - CV ROC-AUC (5-Fold)  : 0.9996
+      - Test Accuracy        : 98.75%
+      - Test Recall (Sens.)  : 97.22%  (Target PRD >= 88.0%)
+      - Test Specificity     : 99.40%  (Target PRD >= 80.0%)
+      - Test F1-Score        : 97.90%
+      - Test ROC-AUC         : 0.9990  (Target PRD >= 0.8800)
+      - Test PR-AUC          : 0.9979
+      - Confusion Matrix     : TN=167, FP=1, FN=2, TP=70
+    * Naive Bayes (Standar (4 Model Inti)):
+      - Best Hyperparameters : {'clf__var_smoothing': 0.01, 'clf__use_smote_nc': True}
+      - CV ROC-AUC (5-Fold)  : 0.9994
+      - Test Accuracy        : 99.17%
+      - Test Recall (Sens.)  : 98.61%  (Target PRD >= 88.0%)
+      - Test Specificity     : 99.40%  (Target PRD >= 80.0%)
+      - Test F1-Score        : 98.61%
+      - Test ROC-AUC         : 0.9993  (Target PRD >= 0.8800)
+      - Test PR-AUC          : 0.9983
+      - Confusion Matrix     : TN=167, FP=1, FN=1, TP=71
+    * SVM (Standar (4 Model Inti)):
+      - Best Hyperparameters : {'clf__C': 0.5, 'clf__gamma': 'scale', 'clf__kernel': 'rbf', 'clf__use_smote_nc': True}
+      - CV ROC-AUC (5-Fold)  : 0.9998
+      - Test Accuracy        : 99.17%
+      - Test Recall (Sens.)  : 97.22%  (Target PRD >= 88.0%)
+      - Test Specificity     : 100.00%  (Target PRD >= 80.0%)
+      - Test F1-Score        : 98.59%
+      - Test ROC-AUC         : 0.9994  (Target PRD >= 0.8800)
+      - Test PR-AUC          : 0.9987
+      - Confusion Matrix     : TN=168, FP=0, FN=2, TP=70
+    * XGBoost (Perluasan Ensemble):
+      - Best Hyperparameters : {'clf__learning_rate': 0.1, 'clf__max_depth': 3, 'clf__subsample': 0.85, 'clf__use_smote_nc': True}
+      - CV ROC-AUC (5-Fold)  : 0.9991
+      - Test Accuracy        : 99.17%
+      - Test Recall (Sens.)  : 97.22%  (Target PRD >= 88.0%)
+      - Test Specificity     : 100.00%  (Target PRD >= 80.0%)
+      - Test F1-Score        : 98.59%
+      - Test ROC-AUC         : 0.9996  (Target PRD >= 0.8800)
+      - Test PR-AUC          : 0.9991
+      - Confusion Matrix     : TN=168, FP=0, FN=2, TP=70
+    * LightGBM (Perluasan Ensemble):
+      - Best Hyperparameters : {'clf__learning_rate': 0.1, 'clf__max_depth': 4, 'clf__max_iter': 150, 'clf__use_smote_nc': False}
+      - CV ROC-AUC (5-Fold)  : 0.9994
+      - Test Accuracy        : 98.75%
+      - Test Recall (Sens.)  : 95.83%  (Target PRD >= 88.0%)
+      - Test Specificity     : 100.00%  (Target PRD >= 80.0%)
+      - Test F1-Score        : 97.87%
+      - Test ROC-AUC         : 0.9998  (Target PRD >= 0.8800)
+      - Test PR-AUC          : 0.9994
+      - Confusion Matrix     : TN=168, FP=0, FN=3, TP=69
+
+[3] MODEL TERBAIK TERPILIH : Naive Bayes -> disimpan ke models/best_model.joblib
+[4] ENGINE TIER 1 (FASKES PRIMER TANPA LAB - 22 FITUR): Accuracy=94.58%, Recall=93.06%, Specificity=95.24%, ROC-AUC=0.9891
+
+[5] HASIL STUDI ABLASI FITUR (PEMBAGIAN TUGAS BRAINSTORMING MHS 1, 2, 3)
+    - Fitur A (MHS 1 - Tier 1 Faskes Primer) (15 fitur): Accuracy=90.42%, Recall=90.28%, Specificity=90.48%, ROC-AUC=0.9601
+    - Fitur A + B (MHS 2 - +Longitudinal Trajectory) (22 fitur): Accuracy=94.58%, Recall=93.06%, Specificity=95.24%, ROC-AUC=0.9910
+    - Fitur A + B + C (MHS 3 - Full Multi-Tier & Biomarker) (30 fitur): Accuracy=99.17%, Recall=97.22%, Specificity=100.00%, ROC-AUC=0.9996
+
+[6] EVALUASI SUBTYPE STRATIFICATION (3-KELAS: NORMAL vs LATE-ONSET vs EARLY-ONSET)
+    - Multiclass Accuracy : 97.92%
+    - Multiclass Macro-F1 : 96.64%
+    - Multiclass OvR AUC  : 0.9996
+
+[7] TOP 5 FITUR PREDIKTIF BERDASARKAN ACRFS (PEARSON + MI + CHI2)
+    #1 Proteinuria Dipstick (proteinuria_ordinal): ACRFS=0.9008 (|r|=0.702, MI=0.269, Chi2=246.9)
+    #2 Lonjakan MAP (ΔMAP) (delta_map): ACRFS=0.7370 (|r|=0.739, MI=0.357, Chi2=52.2)
+    #3 Rasio Protein/Kreatinin Urin (urine_pcr): ACRFS=0.6512 (|r|=0.649, MI=0.292, Chi2=64.5)
+    #4 Mean Arterial Pressure (MAP) (map_mmhg): ACRFS=0.6214 (|r|=0.673, MI=0.292, Chi2=34.2)
+    #5 Lonjakan Sistolik (ΔSBP) (delta_sbp): ACRFS=0.5528 (|r|=0.634, MI=0.242, Chi2=31.5)
+================================================================================

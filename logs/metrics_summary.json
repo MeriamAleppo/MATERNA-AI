@@ -1,0 +1,419 @@
+{
+  "clean_stats": {
+    "initial_rows": 1212,
+    "duplicate_rows": 12,
+    "after_dedup_rows": 1200,
+    "missing_before": {
+      "patient_id": 0,
+      "faskes_origin": 0,
+      "gestational_age_weeks": 0,
+      "maternal_age": 0,
+      "gravida": 0,
+      "parity": 0,
+      "nullipara": 0,
+      "preg_interval_yrs": 0,
+      "prev_pe_history": 0,
+      "family_htn_history": 0,
+      "gest_diabetes": 0,
+      "pre_pregnancy_bmi": 0,
+      "lila_cm": 19,
+      "systolic_bp": 0,
+      "diastolic_bp": 0,
+      "map_mmhg": 0,
+      "pulse_pressure": 0,
+      "sbp_trimester1": 0,
+      "dbp_trimester1": 0,
+      "delta_sbp": 0,
+      "delta_dbp": 0,
+      "delta_map": 0,
+      "weight_gain_kg_per_week": 0,
+      "edema_progression": 0,
+      "proteinuria_dipstick": 0,
+      "urine_pcr": 27,
+      "platelet_count_k_ul": 0,
+      "serum_creatinine_mg_dl": 0,
+      "sgot_ast_u_l": 0,
+      "sgpt_alt_u_l": 0,
+      "uric_acid_mg_dl": 31,
+      "utapi_doppler": 48,
+      "preeclampsia_subtype_code": 0,
+      "preeclampsia_subtype": 0,
+      "preeclampsia_diagnosis": 0
+    },
+    "categorical_imputed": 0,
+    "numeric_imputed_by_ga_median": {
+      "lila_cm": 19,
+      "urine_pcr": 27,
+      "uric_acid_mg_dl": 31,
+      "utapi_doppler": 48
+    },
+    "missing_after": 0,
+    "obstetric_inconsistencies_fixed": 94,
+    "inconsistent_bp_fixed": 0,
+    "boundary_outliers_clipped": 0
+  },
+  "best_model_name": "Naive Bayes",
+  "tier1_engine": {
+    "num_features": 22,
+    "accuracy": 0.9458,
+    "precision": 0.8933,
+    "recall_sensitivity": 0.9306,
+    "specificity": 0.9524,
+    "f1_score": 0.9116,
+    "roc_auc": 0.9891
+  },
+  "models": {
+    "Decision Tree": {
+      "family": "Standar (4 Model Inti)",
+      "filename": "decision_tree_model.joblib",
+      "best_params": {
+        "clf__criterion": "entropy",
+        "clf__max_depth": 4,
+        "clf__min_samples_split": 6,
+        "clf__use_smote_nc": true
+      },
+      "cv_roc_auc": 0.9536,
+      "test_accuracy": 0.9208,
+      "test_precision": 0.8442,
+      "test_recall_sensitivity": 0.9028,
+      "test_specificity": 0.9286,
+      "test_f1": 0.8725,
+      "test_roc_auc": 0.9709,
+      "test_pr_auc": 0.8917,
+      "confusion_matrix": [
+        [
+          156,
+          12
+        ],
+        [
+          7,
+          65
+        ]
+      ],
+      "train_time_sec": 18.279
+    },
+    "KNN": {
+      "family": "Standar (4 Model Inti)",
+      "filename": "knn_model.joblib",
+      "best_params": {
+        "clf__n_neighbors": 15,
+        "clf__p": 2,
+        "clf__weights": "distance",
+        "clf__use_smote_nc": true
+      },
+      "cv_roc_auc": 0.9996,
+      "test_accuracy": 0.9875,
+      "test_precision": 0.9859,
+      "test_recall_sensitivity": 0.9722,
+      "test_specificity": 0.994,
+      "test_f1": 0.979,
+      "test_roc_auc": 0.999,
+      "test_pr_auc": 0.9979,
+      "confusion_matrix": [
+        [
+          167,
+          1
+        ],
+        [
+          2,
+          70
+        ]
+      ],
+      "train_time_sec": 12.238
+    },
+    "Naive Bayes": {
+      "family": "Standar (4 Model Inti)",
+      "filename": "naive_bayes_model.joblib",
+      "best_params": {
+        "clf__var_smoothing": 0.01,
+        "clf__use_smote_nc": true
+      },
+      "cv_roc_auc": 0.9994,
+      "test_accuracy": 0.9917,
+      "test_precision": 0.9861,
+      "test_recall_sensitivity": 0.9861,
+      "test_specificity": 0.994,
+      "test_f1": 0.9861,
+      "test_roc_auc": 0.9993,
+      "test_pr_auc": 0.9983,
+      "confusion_matrix": [
+        [
+          167,
+          1
+        ],
+        [
+          1,
+          71
+        ]
+      ],
+      "train_time_sec": 3.936
+    },
+    "SVM": {
+      "family": "Standar (4 Model Inti)",
+      "filename": "svm_model.joblib",
+      "best_params": {
+        "clf__C": 0.5,
+        "clf__gamma": "scale",
+        "clf__kernel": "rbf",
+        "clf__use_smote_nc": true
+      },
+      "cv_roc_auc": 0.9998,
+      "test_accuracy": 0.9917,
+      "test_precision": 1.0,
+      "test_recall_sensitivity": 0.9722,
+      "test_specificity": 1.0,
+      "test_f1": 0.9859,
+      "test_roc_auc": 0.9994,
+      "test_pr_auc": 0.9987,
+      "confusion_matrix": [
+        [
+          168,
+          0
+        ],
+        [
+          2,
+          70
+        ]
+      ],
+      "train_time_sec": 18.227
+    },
+    "XGBoost": {
+      "family": "Perluasan Ensemble",
+      "filename": "xgboost_model.joblib",
+      "best_params": {
+        "clf__learning_rate": 0.1,
+        "clf__max_depth": 3,
+        "clf__subsample": 0.85,
+        "clf__use_smote_nc": true
+      },
+      "cv_roc_auc": 0.9991,
+      "test_accuracy": 0.9917,
+      "test_precision": 1.0,
+      "test_recall_sensitivity": 0.9722,
+      "test_specificity": 1.0,
+      "test_f1": 0.9859,
+      "test_roc_auc": 0.9996,
+      "test_pr_auc": 0.9991,
+      "confusion_matrix": [
+        [
+          168,
+          0
+        ],
+        [
+          2,
+          70
+        ]
+      ],
+      "train_time_sec": 30.993
+    },
+    "LightGBM": {
+      "family": "Perluasan Ensemble",
+      "filename": "lightgbm_model.joblib",
+      "best_params": {
+        "clf__learning_rate": 0.1,
+        "clf__max_depth": 4,
+        "clf__max_iter": 150,
+        "clf__use_smote_nc": false
+      },
+      "cv_roc_auc": 0.9994,
+      "test_accuracy": 0.9875,
+      "test_precision": 1.0,
+      "test_recall_sensitivity": 0.9583,
+      "test_specificity": 1.0,
+      "test_f1": 0.9787,
+      "test_roc_auc": 0.9998,
+      "test_pr_auc": 0.9994,
+      "confusion_matrix": [
+        [
+          168,
+          0
+        ],
+        [
+          3,
+          69
+        ]
+      ],
+      "train_time_sec": 254.323
+    }
+  },
+  "ablation": {
+    "Fitur A (MHS 1 - Tier 1 Faskes Primer)": {
+      "num_features": 15,
+      "accuracy": 0.9042,
+      "recall_sensitivity": 0.9028,
+      "specificity": 0.9048,
+      "f1_score": 0.8497,
+      "roc_auc": 0.9601
+    },
+    "Fitur A + B (MHS 2 - +Longitudinal Trajectory)": {
+      "num_features": 22,
+      "accuracy": 0.9458,
+      "recall_sensitivity": 0.9306,
+      "specificity": 0.9524,
+      "f1_score": 0.9116,
+      "roc_auc": 0.991
+    },
+    "Fitur A + B + C (MHS 3 - Full Multi-Tier & Biomarker)": {
+      "num_features": 30,
+      "accuracy": 0.9917,
+      "recall_sensitivity": 0.9722,
+      "specificity": 1.0,
+      "f1_score": 0.9859,
+      "roc_auc": 0.9996
+    }
+  },
+  "multiclass_subtype": {
+    "accuracy": 0.9792,
+    "macro_f1": 0.9664,
+    "roc_auc_ovr": 0.9996,
+    "confusion_matrix": [
+      [
+        166,
+        2,
+        0
+      ],
+      [
+        1,
+        42,
+        0
+      ],
+      [
+        0,
+        2,
+        27
+      ]
+    ]
+  },
+  "acrfs_top10": [
+    {
+      "feature": "proteinuria_ordinal",
+      "clinical_label": "Proteinuria Dipstick",
+      "tier_group": "Tier 2 (Biomarker & Doppler)",
+      "pearson_abs": 0.7019,
+      "mutual_info": 0.2694,
+      "chi2_stat": 246.9408,
+      "pearson_norm": 0.9485,
+      "mi_norm": 0.754,
+      "chi2_norm": 1.0,
+      "acrfs_score": 0.9008,
+      "rank": 1
+    },
+    {
+      "feature": "delta_map",
+      "clinical_label": "Lonjakan MAP (ΔMAP)",
+      "tier_group": "Trajectory ANC",
+      "pearson_abs": 0.739,
+      "mutual_info": 0.3569,
+      "chi2_stat": 52.1857,
+      "pearson_norm": 1.0,
+      "mi_norm": 1.0,
+      "chi2_norm": 0.2109,
+      "acrfs_score": 0.737,
+      "rank": 2
+    },
+    {
+      "feature": "urine_pcr",
+      "clinical_label": "Rasio Protein/Kreatinin Urin",
+      "tier_group": "Tier 2 (Biomarker & Doppler)",
+      "pearson_abs": 0.649,
+      "mutual_info": 0.292,
+      "chi2_stat": 64.5415,
+      "pearson_norm": 0.8749,
+      "mi_norm": 0.8176,
+      "chi2_norm": 0.261,
+      "acrfs_score": 0.6512,
+      "rank": 3
+    },
+    {
+      "feature": "map_mmhg",
+      "clinical_label": "Mean Arterial Pressure (MAP)",
+      "tier_group": "Tier 1 (Klinis Dasar)",
+      "pearson_abs": 0.6728,
+      "mutual_info": 0.2922,
+      "chi2_stat": 34.2206,
+      "pearson_norm": 0.9079,
+      "mi_norm": 0.8181,
+      "chi2_norm": 0.1382,
+      "acrfs_score": 0.6214,
+      "rank": 4
+    },
+    {
+      "feature": "delta_sbp",
+      "clinical_label": "Lonjakan Sistolik (ΔSBP)",
+      "tier_group": "Trajectory ANC",
+      "pearson_abs": 0.6338,
+      "mutual_info": 0.2423,
+      "chi2_stat": 31.4869,
+      "pearson_norm": 0.8538,
+      "mi_norm": 0.6777,
+      "chi2_norm": 0.1271,
+      "acrfs_score": 0.5528,
+      "rank": 5
+    },
+    {
+      "feature": "sgot_ast_u_l",
+      "clinical_label": "Enzim Hepar SGOT (AST)",
+      "tier_group": "Tier 2 (Biomarker & Doppler)",
+      "pearson_abs": 0.5886,
+      "mutual_info": 0.2311,
+      "chi2_stat": 53.8042,
+      "pearson_norm": 0.7909,
+      "mi_norm": 0.646,
+      "chi2_norm": 0.2175,
+      "acrfs_score": 0.5515,
+      "rank": 6
+    },
+    {
+      "feature": "delta_dbp",
+      "clinical_label": "Lonjakan Diastolik (ΔDBP)",
+      "tier_group": "Trajectory ANC",
+      "pearson_abs": 0.6237,
+      "mutual_info": 0.2353,
+      "chi2_stat": 28.0101,
+      "pearson_norm": 0.8397,
+      "mi_norm": 0.6579,
+      "chi2_norm": 0.113,
+      "acrfs_score": 0.5369,
+      "rank": 7
+    },
+    {
+      "feature": "utapi_doppler",
+      "clinical_label": "Doppler Arteri Uterina (UtAPI)",
+      "tier_group": "Tier 2 (Biomarker & Doppler)",
+      "pearson_abs": 0.5944,
+      "mutual_info": 0.2306,
+      "chi2_stat": 38.7822,
+      "pearson_norm": 0.7991,
+      "mi_norm": 0.6448,
+      "chi2_norm": 0.1566,
+      "acrfs_score": 0.5335,
+      "rank": 8
+    },
+    {
+      "feature": "sgpt_alt_u_l",
+      "clinical_label": "Enzim Hepar SGPT (ALT)",
+      "tier_group": "Tier 2 (Biomarker & Doppler)",
+      "pearson_abs": 0.5706,
+      "mutual_info": 0.2191,
+      "chi2_stat": 44.97,
+      "pearson_norm": 0.7659,
+      "mi_norm": 0.6122,
+      "chi2_norm": 0.1817,
+      "acrfs_score": 0.52,
+      "rank": 9
+    },
+    {
+      "feature": "systolic_bp",
+      "clinical_label": "Tensi Sistolik",
+      "tier_group": "Tier 1 (Klinis Dasar)",
+      "pearson_abs": 0.5706,
+      "mutual_info": 0.2263,
+      "chi2_stat": 28.075,
+      "pearson_norm": 0.7659,
+      "mi_norm": 0.6327,
+      "chi2_norm": 0.1133,
+      "acrfs_score": 0.5039,
+      "rank": 10
+    }
+  ]
+}
