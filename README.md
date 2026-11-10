@@ -3,181 +3,193 @@
 # MATERNA-AI: Multi-Tier Clinical Decision Support System for Early Preeclampsia Prediction & Risk Trajectory
 
 [![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
-[![Streamlit](https://img.shields.io/badge/Streamlit-1.38%2B-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)](https://streamlit.io/)
 [![Scikit-Learn](https://img.shields.io/badge/Scikit--Learn-1.5%2B-F7931E?style=for-the-badge&logo=scikitlearn&logoColor=white)](https://scikit-learn.org/)
+[![SHAP](https://img.shields.io/badge/XAI-TreeSHAP%20%7C%20KernelSHAP%20%7C%20LinearSHAP-8A2BE2?style=for-the-badge)](https://shap.readthedocs.io/)
+[![Streamlit](https://img.shields.io/badge/Streamlit-1.38%2B-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)](https://streamlit.io/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.115%2B-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
+[![Cohort](https://img.shields.io/badge/Cohort-N%3D2%2C000%20Pasien-0A66C2?style=for-the-badge)](#4-spesifikasi-dataset--kamus-data)
+[![Tier 1 Recall](https://img.shields.io/badge/Tier--1%20Recall-93.18%25-2EA043?style=for-the-badge)](#5-benchmark-evaluasi-model--interpretasi-klinis)
 [![License](https://img.shields.io/badge/License-MIT-2EA043?style=for-the-badge)](https://opensource.org/licenses/MIT)
-[![Build Status](https://img.shields.io/badge/Build-Passing-brightgreen?style=for-the-badge&logo=githubactions&logoColor=white)](https://github.com/MeriamAleppo/MATERNA-AI)
 
 <p align="center">
-  <b>Mata Kuliah:</b> Penambangan Data (Data Mining) — Ganjil 2026/2027 &nbsp;|&nbsp;
-  <b>Kelompok Studi:</b> A11.4410<br/>
-  <b>Program Studi:</b> S1 Teknik Informatika, Fakultas Ilmu Komputer, Universitas Dian Nuswantoro, Semarang<br/>
-  <b>Dosen Pengampu:</b> Ardytha Luthfiarta, M.Kom, MCS
+  <b>Mata Kuliah:</b> Penambangan Data (Data Mining) — Semester Ganjil 2026/2027 &nbsp;|&nbsp;
+  <b>Kelompok Studi:</b> A11.4507<br/>
+  <b>Institusi:</b> Program Studi S1 Teknik Informatika, Fakultas Ilmu Komputer, Universitas Dian Nuswantoro, Semarang<br/>
+  <b>Dosen Pengampu:</b> Abu Salam, M.Kom &nbsp;|&nbsp;
+  <b>Ketua Program Studi:</b> Dr. De Rosal Ignatius Moses S., M.Kom
 </p>
 
 ---
 
-[Ringkasan Eksekutif](#1-ringkasan-eksekutif--latar-belakang-masalah) •
-[Tim Peneliti](#2-tim-peneliti--distribusi-paket-kerja) •
-[Arsitektur Solusi](#3-arsitektur-solusi-materna-ai) •
-[Kamus Data](#4-kamus-data--spesifikasi-20-atribut-prediktor) •
-[Benchmark Evaluasi](#5-hasil-eksperimen--benchmark-evaluasi) •
-[Struktur Direktori](#6-struktur-direktori-repositori) •
-[Instalasi & Eksekusi](#7-panduan-instalasi--eksekusi-cepat) •
-[Referensi Ilmiah](#8-sumber-data--referensi-ilmiah)
+[Ringkasan Klinis](#1-ringkasan-eksekutif--latar-belakang-klinis) •
+[Identitas & Tim Peneliti](#2-identitas-akademik--tim-peneliti) •
+[Arsitektur & Metodologi](#3-arsitektur-klinis--metodologi-komputasi) •
+[Spesifikasi Dataset](#4-spesifikasi-dataset--kamus-data) •
+[Benchmark Evaluasi](#5-benchmark-evaluasi-model--interpretasi-klinis) •
+[Struktur Repositori](#6-struktur-direktori-repositori) •
+[Panduan Eksekusi](#7-panduan-instalasi--eksekusi-sistem) •
+[Referensi Ilmiah](#8-etika-klinis--referensi-ilmiah)
 
 </div>
 
 ---
 
-## 1. Ringkasan Eksekutif & Latar Belakang Masalah
+## 1. Ringkasan Eksekutif & Latar Belakang Klinis
 
-**MATERNA-AI** adalah Sistem Pendukung Keputusan Klinis Bertingkat (*Multi-Tier Clinical Decision Support System* / CDSS) berbasis pembelajaran mesin terkalibrasi yang dirancang untuk melakukan deteksi dini preeklamsia, memantau dinamika trajektori hemodinamik antar-kunjungan *Antenatal Care* (ANC), menstratifikasi subtipe keparahan klinis, serta memetakan rekomendasi intervensi sesuai protokol nasional. Sistem ini dikembangkan dan divalidasi pada kohort terstruktur berjumlah tepat **2.000 observasi pasien unik** (**1.560 kehamilan Normal [78%]** dan **440 kasus Preeklamsia [22%]**) menggunakan **20 atribut prediktor** dan **2 variabel target**.
+**MATERNA-AI** adalah Sistem Pendukung Keputusan Klinis Bertingkat (*Multi-Tier Clinical Decision Support System* / CDSS) berbasis pembelajaran mesin terkalibrasi yang dirancang untuk mendeteksi risiko preeklamsia sejak dini, memantau dinamika trajektori hemodinamik longitudinal antar-kunjungan *Antenatal Care* (ANC), menstratifikasi subtipe keparahan klinis, serta memetakan rekomendasi tata laksana berbasis Pedoman Nasional Pelayanan Kedokteran (PNPK) POGI. Sistem ini dibangun dan dievaluasi pada dataset kohort terkalibrasi berjumlah tepat **2.000 observasi pasien unik**—terdiri atas **1.560 kasus Normal/Normotensif (78,0%)** dan **440 kasus Positif Preeklamsia (22,0%)**—dengan struktur **20 atribut prediktor** dan **2 atribut target** (`diagnosis` dan `subtype`).
 
-Pengembangan **MATERNA-AI** dilandasi oleh tiga urgensi klinis utama pada layanan kesehatan maternal di Indonesia:
+Pengembangan **MATERNA-AI** berangkat dari tiga tantangan fundamental dalam pelayanan kesehatan maternal di Indonesia:
 
-1. **Tingginya Angka Kematian Ibu (AKI) Akibat Hipertensi Kehamilan di Indonesia:** Preeklamsia dan eklamsia masih menjadi salah satu dari dua penyebab langsung kematian maternal tertinggi di Indonesia (menyumbang sekitar 24%–30% AKI nasional), sekaligus memicu komplikasi multisistem fatal seperti sindrom HELLP (*Hemolysis, Elevated Liver enzymes, Low Platelet count*), gagal ginjal akut, solusio plasenta, pertumbuhan janin terhambat (*Intrauterine Growth Restriction* / IUGR), dan kelahiran prematur iatrogenik.
-2. **Kesenjangan Diagnostik antara FKTP dan RS Rujukan (*Diagnostic Resource Gap*):** Model prediksi preeklamsia modern di negara maju umumnya mengandalkan panel biomarker biokimia organ target dan ultrasonografi *Doppler* Arteri Uterina (*UtAPI*) yang hanya tersedia di Rumah Sakit Umum Daerah (RSUD) Rujukan. Sebaliknya, garda terdepan skrining kehamilan di Indonesia berada di Fasilitas Kesehatan Tingkat Pertama (FKTP)—meliputi Puskesmas, Puskesmas Pembantu (Pustu), Posyandu, dan Praktik Mandiri Bidan—yang minim instrumen laboratorium. Di samping itu, pemeriksaan tekanan darah konvensional yang bersifat statis satu titik waktu (*single-timepoint snapshot*) kerap gagal mendeteksi lonjakan resistensi vaskular laten sebelum melewati ambang hipertensi klinis ($\ge 140/90\text{ mmHg}$).
-3. **Sempitnya Jendela Emas Profilaksis Aspirin ($< 16$ Minggu):** Berdasarkan konsensus obstetri global dan Pedoman Nasional Pelayanan Kedokteran (PNPK) POGI (2021), pemberian profilaksis **Aspirin dosis rendah (80–150 mg/hari)** disertai suplementasi kalsium (1.000–1.500 mg/hari) sangat efektif mencegah *Early-Onset Preeclampsia* hanya apabila diinisiasi **sebelum usia kehamilan 16 minggu**—yakni sebelum proses invasi trofoblas pada *remodeling* arteri spiralis plasenta selesai secara ireversibel. Kegagalan menjaring ibu berisiko tinggi sejak dini (*False Negative*) menutup jendela pencegahan primer tersebut.
+1. **Tingginya Mortalitas dan Morbiditas Akibat Hipertensi Kehamilan:** Preeklamsia dan eklamsia masih menjadi salah satu penyebab langsung Angka Kematian Ibu (AKI) tertinggi di Indonesia (menyumbang sekitar 24%–30% kematian maternal nasional), serta memicu komplikasi multisistem seperti sindrom HELLP (*Hemolysis, Elevated Liver enzymes, Low Platelet count*), gagal ginjal akut, solusio plasenta, *Intrauterine Growth Restriction* (IUGR), dan kelahiran prematur iatrogenik.
+2. **Kesenjangan Infrastruktur Diagnostik Layanan Primer vs. Rujukan (*Diagnostic Resource Gap*):** Instrumen prediksi preeklamsia konvensional di rumah sakit tersier sangat bergantung pada panel biokimia organ target dan ultrasonografi *Doppler* Arteri Uterina (`utapi_mean`) yang umumnya tidak tersedia di Fasilitas Kesehatan Tingkat Pertama (FKTP) seperti Puskesmas, Puskesmas Pembantu (Pustu), Posyandu, maupun Praktik Mandiri Bidan. Selain itu, pengukuran tekanan darah tunggal pada satu titik waktu (*single-timepoint snapshot*) kerap gagal mengidentifikasi eskalasi resistensi vaskular laten sebelum melampaui ambang batas hipertensi klinis ($\ge 140/90\text{ mmHg}$).
+3. **Sempitnya Jendela Emas Profilaksis Aspirin ($< 16$ Minggu):** Berdasarkan konsensus obstetri global dan pedoman POGI, pemberian profilaksis **Aspirin dosis rendah (80–150 mg/hari)** disertai suplementasi Kalsium (1.000–1.500 mg/hari) sangat efektif menekan insiden *Early-Onset Preeclampsia* apabila diinisiasi **sebelum usia kehamilan 16 minggu**, yakni sebelum proses *remodeling* arteri spiralis plasenta oleh invasi trofoblas selesai secara ireversibel. Kegagalan menjaring ibu hamil berisiko tinggi di tingkat FKTP (*False Negative*) berakibat hilangnya kesempatan pencegahan primer tersebut.
 
 > [!IMPORTANT]
-> **MATERNA-AI** menjembatani kesenjangan layanan primer dan rujukan melalui arsitektur *Dual-Engine*: memberdayakan tenaga kesehatan di FKTP untuk melakukan penapisan sensitif nir-laboratorium (**Tier 1**), sekaligus menyediakan presisi diagnostik tinggi berbasis biomarker organ target dan stratifikasi subtipe onset bagi dokter spesialis di RSUD Rujukan (**Tier 2**).
+> **MATERNA-AI** menjembatani kesenjangan diagnostik melalui pendekatan **Dual-Engine Multi-Tier**: memberdayakan bidan dan dokter di FKTP untuk melakukan penapisan sensitif nir-laboratorium (**Tier 1**), sekaligus menyediakan konfirmasi diagnostik berpresisi tinggi berbasis biomarker kerusakan organ target dan stratifikasi subtipe onset bagi dokter spesialis obstetri dan ginekologi (Sp.OG) di Rumah Sakit Rujukan (**Tier 2**).
 
 ---
 
-## 2. Tim Peneliti & Distribusi Paket Kerja
+## 2. Identitas Akademik & Tim Peneliti
 
-Proyek penelitian ini dilaksanakan oleh **Kelompok Studi A11.4410** pada mata kuliah **Penambangan Data (Data Mining) — Semester Ganjil 2026/2027**, Program Studi S1 Teknik Informatika, Fakultas Ilmu Komputer, Universitas Dian Nuswantoro, Semarang, di bawah bimbingan **Ardytha Luthfiarta, M.Kom, MCS**.
+### 2.1. Metadata Akademik Resmi
 
-| No | Nama Peneliti | NIM | Peran & Tanggung Jawab Paket Kerja |
+| Komponen Metadata | Keterangan Resmi |
+| :--- | :--- |
+| **Judul Proyek** | MATERNA-AI: Multi-Tier Clinical Decision Support System for Early Preeclampsia Prediction & Risk Trajectory |
+| **Mata Kuliah** | Penambangan Data (Data Mining) — Semester Ganjil 2026/2027 |
+| **Institusi** | Program Studi S1 Teknik Informatika, Fakultas Ilmu Komputer, Universitas Dian Nuswantoro, Semarang |
+| **Kelompok Studi** | A11.4507 |
+| **Dosen Pengampu** | Abu Salam, M.Kom |
+| **Ketua Program Studi** | Dr. De Rosal Ignatius Moses S., M.Kom |
+
+### 2.2. Susunan Tim Peneliti & Distribusi Paket Kerja
+
+| No | Nama Lengkap Peneliti | NIM | Peran & Fokus Paket Kerja |
 | :-: | :--- | :---: | :--- |
-| **1** | **M. Jottie Ramadhan Putu Sigit** | `A11.2024.16048` | **Paket Kerja 2:** Biomarker Organ Target & Stratifikasi Subtipe Multi-Class (*Normal*, *Late-Onset* $\ge 34$ minggu, *Early-Onset* $< 34$ minggu) |
+| **1** | **M. Jottie Ramadhan Putu Sigit** | `A11.2024.16048` | **Paket Kerja 2:** Biomarker Organ Target & Stratifikasi Subtipe Multi-Class |
 | **2** | **Nayyara Rauf Ghani Al Khayri** | `A11.2024.16055` | **Paket Kerja 1:** Skrining Primer Nir-Laboratorium, Optimasi Hemodinamik MAP, & Prapemrosesan |
-| **3** | **Yola Enova Sabila** | `A11.2024.16049` | **Paket Kerja 3:** Pemodelan Dinamika Trajektori Longitudinal Kunjungan ANC ($\Delta\text{MAP}$ & *Weight Gain Velocity*) |
-| **4** | **Najwa Handaria Suparna** | `A11.2024.16039` | **Paket Kerja 4:** *Explainable AI* (SHAP), Kalibrasi Probabilitas, & Mesin Aturan POGI |
+| **3** | **Yola Enova Sabila** | `A11.2024.16049` | **Paket Kerja 3:** Pemodelan Dinamika Trajektori Longitudinal Kunjungan ANC |
+| **4** | **Najwa Handaria Suparna** | `A11.2024.16039` | **Paket Kerja 4:** Explainable AI (SHAP), Kalibrasi Probabilitas, & Mesin Aturan Klinis POGI |
 
 ---
 
-## 3. Arsitektur Solusi MATERNA-AI
+## 3. Arsitektur Klinis & Metodologi Komputasi
 
-Kerangka kerja komputasi **MATERNA-AI** mengintegrasikan lima pilar rekayasa data klinis dan pembelajaran mesin terinterpretasi secara *end-to-end*:
+Alur kerja komputasi **MATERNA-AI** mengintegrasikan validasi fisiologis obstetrik, rekayasa fitur hemodinamik dan longitudinal, seleksi fitur multi-kriteria berbasis *dense ranking* bebas kebocoran data, pemodelan klasifikasi dua tingkat, penjelasan lokal SHAP yang konsisten secara matematis, serta mesin inferensi aturan klinis POGI:
 
 ```mermaid
 flowchart TD
-    A["Kohort Klinis Maternal (N = 2.000 Pasien: 1.560 Normal [78%] & 440 Preeklamsia [22%])"] --> B["Prapemrosesan, Audit Fisiologis Obstetrik & Standardisasi (Paket Kerja 1)"]
+    A["Kohort Klinis Maternal (N = 2.000 Pasien Unik: 1.560 Normal [78,0%] & 440 Preeklamsia [22,0%])"] --> B["Prapemrosesan Klinis, Validasi Batas Fisiologis, & Partisi Stratified 80:20 (Paket Kerja 1)"]
     B --> C["Rekayasa Hemodinamik MAP & Trajektori ANC: map_score, delta_map_prev, weight_gain_velocity (Paket Kerja 1 & 3)"]
-    C --> D["Seleksi Fitur ACRFS pada 20 Atribut Prediktor -> Menyaring 15 Fitur Terbaik (R_final Terendah)"]
-    D --> E1["Engine Tier 1: Skrining Nir-Lab FKTP (12 Fitur Klinis Dasar + Trajektori ANC)"]
-    D --> E2["Engine Tier 2: Konfirmasi RSUD Rujukan (+6 Biomarker Organ Target & Stratifikasi Subtipe T02)"]
-    E1 --> F["4 Model Klasifikasi Terkalibrasi: KNN | Gaussian Naive Bayes | SVM | Decision Tree"]
+    C --> D["Seleksi Fitur ACRFS pada Himpunan Latih (Pearson + Mutual Information + Chi-Square dengan Dense Ranking -> Top 15 Fitur)"]
+    D --> E1["Skenario Tier 1: Skrining Nir-Lab FKTP (12 Atribut Klinis Dasar + 2 Fitur Trajektori ANC)"]
+    D --> E2["Skenario Tier 2: RS Rujukan Lengkap (+6 Biomarker Organ Target & Stratifikasi Subtipe Multi-Class — Paket Kerja 2)"]
+    E1 --> F["Komparasi & Optimasi 4 Model Klasifikasi: KNN | Gaussian Naive Bayes | SVM | Decision Tree"]
     E2 --> F
-    F --> G["Modul Explainable AI: TreeSHAP (Decision Tree) | KernelSHAP & LinearSHAP (SVM, KNN, Naive Bayes)"]
-    G --> H["Kalibrasi Probabilitas & Mesin Aturan POGI: Profilaksis Aspirin <16 Minggu & Rujukan PONEK (Paket Kerja 4)"]
+    F --> G1["TreeSHAP: Alokasi Khusus Model Berbasis Pohon (Decision Tree)"]
+    F --> G2["KernelSHAP & LinearSHAP: Alokasi Algoritma Non-Pohon (SVM, KNN, Gaussian Naive Bayes)"]
+    G1 --> H["Kalibrasi Probabilitas Risiko & Mesin Aturan Klinis POGI: Profilaksis Aspirin <16 Minggu & Rujukan PONEK (Paket Kerja 4)"]
+    G2 --> H
 ```
 
-### 3.1. Dual-Engine Multi-Tier Screening (Tier 1 FKTP vs Tier 2 RSUD Rujukan)
-- **Engine Tier 1 (Skrining Primer Nir-Laboratorium / FKTP):** Dirancang khusus untuk Puskesmas, Pustu, Posyandu, dan Praktik Mandiri Bidan. Memanfaatkan **12 atribut klinis dasar** (demografi, anamnesis obstetrik, antropometri IMT pra-hamil & LILA, serta hemodinamik) yang diperkaya dengan **2 atribut trajektori kunjungan ANC** tanpa ketergantungan pada pemeriksaan darah, urin kuantitatif, maupun USG *Doppler*. Fokus utama skenario ini adalah meminimalkan *False Negative* (*high sensitivity triage*).
-- **Engine Tier 2 (Konfirmasi Diagnostik & Stratifikasi RSUD Rujukan):** Dioperasikan di rumah sakit rujukan dengan mengintegrasikan tambahan **6 biomarker kerusakan organ target** (proteinuria carik celup, rasio protein/kreatinin urin, hitung trombosit, enzim transaminase hati SGOT/SGPT, kreatinin serum, dan rerata indeks pulsatilitas arteri uterina `utapi_mean`). Selain memprediksi diagnosis biner (**T01 `diagnosis`**), Tier 2 melakukan stratifikasi subtipe multi-kelas (**T02 `subtype`**) ke dalam **Normal**, **Late-Onset Preeclampsia ($\ge 34$ minggu)**, dan **Early-Onset Preeclampsia ($< 34$ minggu)** yang memerlukan kesiapsiagaan perawatan intensif maternal-neonatal (PONEK/NICU).
+### 3.1. Arsitektur Dual-Engine Multi-Tier & Stratifikasi Subtipe (Paket Kerja 1 & 2)
+- **Tier 1 (Skrining Primer Nir-Laboratorium / FKTP):** Dirancang untuk fasilitas layanan primer tanpa laboratorium darah/urin kuantitatif maupun USG *Doppler*. Memanfaatkan **12 atribut klinis dasar** (demografi, riwayat obstetrik, antropometri IMT pra-hamil & LILA, serta parameter tensimeter) yang dipadukan dengan **2 fitur trajektori longitudinal ANC**. Fokus optimasi Tier 1 adalah memaksimalkan sensitivitas (*Recall*) guna menekan kasus *False Negative* seminimal mungkin pada penapisan awal.
+- **Tier 2 (Konfirmasi Diagnostik & Stratifikasi Rumah Sakit Rujukan):** Mengintegrasikan tambahan **6 biomarker kerusakan organ target** (`proteinuria_dipstick`, `protein_creatinine_ratio`, `platelet_count`, `sgot_sgpt_level`, `serum_creatinine`, dan `utapi_mean`). Di samping mengonfirmasi target biner `diagnosis` (`0` = Normal, `1` = Preeklamsia), Tier 2 memetakan stratifikasi `subtype` multi-kelas ke dalam **Normal (`0`)**, **Late-Onset Preeclampsia $\ge 34$ minggu (`1`)**, dan **Early-Onset Preeclampsia $< 34$ minggu (`2`)** yang membutuhkan kesiapsiagaan intervensi fetomaternal dan ruang intensif neonatal (PONEK/NICU).
 
-### 3.2. Rekayasa Fitur Hemodinamik *Mean Arterial Pressure* (MAP) & Prapemrosesan
-Tekanan darah sistolik (`systolic_bp`) dan diastolik (`diastolic_bp`) tunggal sering kali belum cukup sensitif menangkap peningkatan resistensi vaskular perifer pada awal trimester kedua. Sistem menurunkan atribut hemodinamik terkalibrasi **`map_score`** menggunakan formulasi fisiologis:
+### 3.2. Optimasi Hemodinamik *Mean Arterial Pressure* (MAP) & Prapemrosesan (Paket Kerja 1)
+Pengukuran tekanan darah sistolik (`systolic_bp`) dan diastolik (`diastolic_bp`) secara terpisah sering kali kurang peka menangkap peningkatan resistensi vaskular perifer pada fase subklinis. Sistem menurunkan indikator tekanan perfusi arteri rata-rata **`map_score`** menggunakan persamaan hemodinamik standar:
 
-$$\text{MAP} = \frac{\text{SBP} + 2 \times \text{DBP}}{3} = \text{DBP} + \frac{1}{3}\left(\text{SBP} - \text{DBP}\right)$$
+$$\text{MAP} = \frac{\text{systolic\_bp} + 2 \times \text{diastolic\_bp}}{3}$$
 
-Nilai $\text{MAP} \ge 95\text{ mmHg}$ menandai peningkatan resistensi vaskular sistemik dan $\text{MAP} \ge 106\text{ mmHg}$ mengindikasikan tekanan perfusi kritis. Seluruh alur prapemrosesan dilengkapi validator konsistensi obstetrik otomatis (mis. sinkronisasi `gravida == 1` terhadap `nullipara = 1` dan `pregnancy_interval = 0`), imputasi median/modus di dalam *cross-validation fold*, serta standardisasi *Z-score* (`StandardScaler`) sehingga 100% bebas dari kebocoran data (*data leakage*).
+Seluruh tahapan prapemrosesan dilengkapi audit batas fisiologis otomatis (termasuk aturan konsistensi obstetrik `gravida == 1` terhadap `nullipara = 1` dan `pregnancy_interval = 0`), imputasi statistik, serta penskalaan fitur (`StandardScaler`) yang di-*fit* secara ketat hanya pada data latih di dalam *Stratified 5-Fold Cross-Validation* untuk menjamin pipeline bebas dari *data leakage*.
 
-### 3.3. Pemodelan Dinamika Trajektori Longitudinal Kunjungan ANC
-Untuk mengatasi keterbatasan evaluasi statis satu kunjungan, Paket Kerja 3 memodelkan gradien perubahan tanda vital ibu hamil antar-kunjungan ANC berurutan melalui dua fitur temporal kunci:
-- **`delta_map_prev` ($\Delta\text{MAP} = \text{MAP}_{t} - \text{MAP}_{t-1}$):** Mengukur magnitudo lonjakan tekanan arteri rata-rata dibandingkan kunjungan ANC sebelumnya. Kenaikan $\Delta\text{MAP} \ge 12\text{--}15\text{ mmHg}$ merupakan sinyal prodromal vasospasme endotel bahkan ketika tekanan darah absolut pasien masih berada di zona normotensif tinggi (*borderline* $130/85\text{ mmHg}$).
-- **`weight_gain_velocity` ($\frac{\Delta\text{BB}}{\Delta t}$ dalam $\text{kg/minggu}$):** Mengukur kecepatan akumulasi massa tubuh mingguan untuk mendeteksi kebocoran kapiler dan retensi cairan ekstravaskular mendadak ($\ge 0,75\text{ kg/minggu}$) yang mendahului edema klinis anasarka.
+### 3.3. Pemodelan Dinamika Trajektori Longitudinal Kunjungan ANC (Paket Kerja 3)
+Untuk menanggulangi kelemahan evaluasi klinis satu waktu (*cross-sectional snapshot*), sistem mengekstraksi kemiringan perubahan fisiologis ibu hamil antar-kunjungan ANC berurutan melalui dua fitur temporal:
+- **`delta_map_prev` ($\Delta\text{MAP}$):** Selisih perubahan *Mean Arterial Pressure* saat ini terhadap kunjungan ANC sebelumnya. Lonjakan $\Delta\text{MAP} \ge 12\text{--}15\text{ mmHg}$ mengindikasikan vasospasme endotel progresif meskipun tekanan darah absolut ibu masih tampak berada di rentang normotensif tinggi (*borderline*).
+- **`weight_gain_velocity` ($\text{kg/minggu}$):** Kecepatan pertambahan berat badan mingguan ibu hamil sebagai penanda dini ekstravasasi plasma dan retensi cairan interstisial patologis ($\ge 0,75\text{ kg/minggu}$) yang mendahului manifestasi edema klinis.
 
-### 3.4. Seleksi Fitur ACRFS (*Aggregated Coefficient Ranking-based Feature Selection*)
-Mengadopsi metodologi **ACRFS** (*Sreehari & Babu, 2025*), sistem mengevaluasi seluruh **20 atribut prediktor** menggunakan penggabungan peringkat (*rank aggregation*) dari multi-kriteria statistik filter yang saling melengkapi—mencakup koefisien korelasi linier absolut (*Pearson* $|r|$), ketergantungan non-linier berbasis entropi (*Mutual Information*), dan statistik asosiasi distribusi (*Chi-Square* $\chi^2$). Setiap atribut prediktor $f_i$ diberi peringkat pada masing-masing koefisien evaluasi, lalu diagregasi menjadi skor peringkat komposit akhir **$R_{\text{final}}(f_i)$**:
+### 3.4. Seleksi Fitur ACRFS (*Aggregated Coefficient Ranking Feature Selection*)
+Guna mereduksi multikolinearitas dan menyaring prediktor paling informatif, **MATERNA-AI** mengimplementasikan algoritma **ACRFS** (*Sreehari & Babu, 2025*) secara eksklusif pada **himpunan data latih**. Metode ini mengevaluasi setiap atribut prediktor menggunakan tiga metrik filter yang saling melengkapi:
+1. **Korelasi Pearson ($|r|$):** Mengukur kekuatan asosiasi linier terhadap target.
+2. **Mutual Information ($\text{MI}$):** Menangkap ketergantungan statistik non-linier berbasis teori informasi/entropi.
+3. **Uji Statistik Chi-Square ($\chi^2$):** Mengukur signifikansi divergensi distribusi antar-kelas.
 
-$$R_{\text{final}}(f_i) = \text{AggregateRank}\Big(R_{|r|}(f_i),\; R_{\text{MI}}(f_i),\; R_{\chi^2}(f_i)\Big), \quad i \in \{1, 2, \dots, 20\}$$
+Ketiga koefisien dievaluasi menggunakan skema **dense ranking** pada data latih lalu diagregasikan menjadi peringkat komposit akhir untuk menyaring tepat **15 fitur paling diskriminatif** dari total 20 atribut prediktor.
 
-Dari evaluasi 20 atribut prediktor tersebut, modul ACRFS menyaring tepat **15 fitur terbaik** dengan nilai **$R_{\text{final}}$ terendah** (peringkat paling unggul dan paling konsisten lintas kriteria). Penyaringan ini mengeliminasi fitur redundan, menekan varians estimasi, dan menjaga efisiensi komputasi inferensi di fasilitas kesehatan.
-
-### 3.5. Explainable AI (SHAP), Kalibrasi Probabilitas, & Mesin Aturan POGI
-Agar keputusan algoritma tidak bersifat kotak hitam (*black-box*) bagi bidan maupun dokter Sp.OG, Paket Kerja 4 menerapkan arsitektur penjelasan lokal dan pemetaan klinis tiga lapis:
-1. **Multi-Estimator SHAP (*SHapley Additive exPlanations*):**
-   - **TreeSHAP:** Digunakan secara khusus untuk model berbasis pohon keputusan (**Decision Tree**) guna mengekstraksi nilai kontribusi Shapley eksak ($\phi_i$) secara efisien pada struktur percabangan pohon.
-   - **KernelSHAP & LinearSHAP:** Digunakan untuk keluarga model non-pohon (**SVM**, **KNN**, dan **Gaussian Naive Bayes**), di mana **LinearSHAP** mengestimasi kontribusi fitur secara analitik pada hiperbidang *SVM* berkernel linear, sedangkan **KernelSHAP** memberikan atribusi koalisi *model-agnostic* bagi *SVM* berkernel RBF, *KNN*, dan *Gaussian Naive Bayes*.
-2. **Kalibrasi Probabilitas Risiko:** Mengonversi skor keluaran diskriminatif model menjadi estimasi probabilitas klinis terkalibrasi $P(Y=1 \mid \mathbf{x}) \in [0, 1]$ yang merefleksikan tingkat risiko aktual pasien.
-3. **POGI Clinical Rule-Matching Engine:** Memadukan probabilitas terkalibrasi, prediksi subtipe, dan deteksi *red flags* PNPK POGI (2021) ke dalam tiga strata tindakan medis:
-   - **Risiko Rendah ($< 15\%$):** Jadwal ANC terpadu rutin di FKTP (minimal 6 kali kunjungan), pemantauan kurva Buku KIA, dan edukasi gizi seimbang.
-   - **Risiko Sedang ($15\%\text{--}40\%$):** Evaluasi inisiasi **profilaksis Aspirin dosis rendah (80–150 mg/hari malam hari sebelum usia kehamilan 16 minggu)**, suplementasi Kalsium (1.000–1.500 mg/hari), serta pemantauan tekanan darah dan MAP diperketat setiap 2 minggu.
-   - **Risiko Tinggi ($> 40\%$ atau positif *Red Flags* POGI):** Protokol rujukan vertikal segera ($< 24$ jam) ke Sp.OG di RSUD PONEK, pemeriksaan USG *Doppler* Arteri Uterina (`utapi_mean`), evaluasi panel laboratorium organ target lengkap, pemberian antihipertensi/$\text{MgSO}_4$ sesuai indikasi, serta persiapan pematangan paru janin bila teridentifikasi *Early-Onset* ($< 34$ minggu).
+### 3.5. Explainable AI (SHAP), Kalibrasi Probabilitas, & Mesin Aturan Klinis POGI (Paket Kerja 4)
+Transparansi pengambilan keputusan algoritmik dijamin melalui pemisahan matematis estimator nilai Shapley (*SHapley Additive exPlanations*), kalibrasi probabilitas risiko, dan pencocokan pedoman klinis nasional:
+- **Alokasi Estimator XAI yang Konsisten Secara Matematis:**
+  - **TreeSHAP:** Dialokasikan khusus untuk model berbasis pohon keputusan (**Decision Tree**) guna mengekstraksi atribusi nilai Shapley eksak dalam waktu polinomial pada struktur percabangan pohon.
+  - **KernelSHAP & LinearSHAP:** Dialokasikan untuk algoritma non-pohon (**SVM**, **KNN**, dan **Gaussian Naive Bayes**). **LinearSHAP** digunakan pada model berbatas keputusan hiperbidang linear (seperti SVM berkernel linear), sedangkan **KernelSHAP** digunakan pada permukaan keputusan non-linear dan probabilistik (SVM berkernel RBF, KNN, dan Gaussian Naive Bayes) guna menjaga ketepatan dan konsistensi matematis atribusi fitur per pasien.
+- **Kalibrasi Probabilitas & Mesin Aturan Klinis POGI:** Skor keluaran model dipetakan menjadi probabilitas risiko terkalibrasi $P(Y=1 \mid \mathbf{x}) \in [0, 1]$ dan disinkronkan dengan protokol PNPK POGI:
+  - **Risiko Rendah ($< 15\%$):** Pemantauan ANC rutin terpadu di FKTP (minimal 6 kali kunjungan) dan edukasi tanda bahaya kehamilan pada Buku KIA.
+  - **Risiko Sedang ($15\%\text{--}40\%$):** Rekomendasi evaluasi inisiasi **profilaksis Aspirin dosis rendah (80–150 mg/hari sebelum usia gestasi 16 minggu)**, suplementasi Kalsium (1.000–1.500 mg/hari), dan pemantauan MAP diperketat tiap 2 minggu.
+  - **Risiko Tinggi ($> 40\%$ atau terdeteksi *Red Flags* POGI):** Instruksi rujukan vertikal terencana/segera ke dokter Sp.OG di RS Rujukan PONEK untuk pemeriksaan biomarker organ target lengkap, evaluasi USG *Doppler* `utapi_mean`, tata laksana antihipertensi/$\text{MgSO}_4$, serta pematangan paru janin apabila teridentifikasi *Early-Onset* ($< 34$ minggu).
 
 ---
 
-## 4. Kamus Data & Spesifikasi 20 Atribut Prediktor
+## 4. Spesifikasi Dataset & Kamus Data
 
-Dataset penelitian mencakup tepat **2.000 observasi pasien unik** dengan komposisi kelas **1.560 Normal (78%)** dan **440 Kasus Preeklamsia (22%)**. Struktur skema terdiri atas **20 atribut prediktor** (`F01`–`F20`) dan **2 variabel target** (`T01`–`T02`).
+Dataset eksperimen terdiri atas tepat **2.000 observasi pasien unik** dengan proporsi kelas **1.560 kasus Normal/Normotensif (78,0%)** dan **440 kasus Positif Preeklamsia (22,0%)**. Partisi *Stratified Train-Test Split* (80:20) membagi kohort menjadi **1.600 observasi data latih** (1.248 Normal dan 352 Preeklamsia) serta **400 observasi data uji independen** (312 Normal dan 88 Preeklamsia). Skema fitur mencakup tepat **20 atribut prediktor** dan **2 atribut target**.
 
-### 4.1. Spesifikasi 20 Atribut Prediktor (`F01` – `F20`)
+### 4.1. Vektor 20 Atribut Prediktor
 
-| Kode | Nama Atribut | Skala / Satuan | Kategori Tier | Deskripsi Klinis Ringkas |
-| :---: | :--- | :--- | :--- | :--- |
-| `F01` | `maternal_age` | Rasio (`Tahun`) | **Tier 1** (Klinis Dasar) | Usia ibu saat kehamilan berlangsung (risiko vaskular meningkat pada $<20$ atau $\ge 35$ tahun) |
-| `F02` | `gestational_age` | Rasio (`Minggu`) | **Tier 1** (Klinis Dasar) | Usia gestasi saat penapisan klinis dilakukan (penentu jendela $<16$ minggu & batas onset 34 minggu) |
-| `F03` | `gravida` | Diskrit (`Frekuensi`) | **Tier 1** (Klinis Dasar) | Jumlah total kehamilan yang pernah dialami ibu termasuk kehamilan saat ini |
-| `F04` | `nullipara` | Biner (`0` / `1`) | **Tier 1** (Klinis Dasar) | Status belum pernah melahirkan janin viabel (`1` = Nullipara, `0` = Multipara) |
-| `F05` | `pregnancy_interval` | Rasio (`Tahun`) | **Tier 1** (Klinis Dasar) | Jarak waktu dari persalinan terakhir (`0` pada nullipara; risiko meningkat bila $>5$–$10$ tahun) |
-| `F06` | `pre_pregnancy_bmi` | Rasio (`kg/m²`) | **Tier 1** (Klinis Dasar) | Indeks Massa Tubuh (IMT) pra-kehamilan sebagai indikator risiko sindrom metabolik & inflamasi endotel |
-| `F07` | `lila_cm` | Rasio (`cm`) | **Tier 1** (Klinis Dasar) | Ukuran Lingkar Lengan Atas sebagai parameter antropometri gizi rutin di Posyandu/FKTP |
-| `F08` | `systolic_bp` | Rasio (`mmHg`) | **Tier 1** (Klinis Dasar) | Tekanan darah sistolik arteri brakialis pada kunjungan pemeriksaan berjalan (ambang $\ge 140\text{ mmHg}$) |
-| `F09` | `diastolic_bp` | Rasio (`mmHg`) | **Tier 1** (Klinis Dasar) | Tekanan darah diastolik arteri brakialis pada kunjungan pemeriksaan berjalan (ambang $\ge 90\text{ mmHg}$) |
-| `F10` | `map_score` | Rasio (`mmHg`) | **Tier 1** (Klinis Dasar) | *Mean Arterial Pressure* hasil rekayasa hemodinamik $(\text{SBP} + 2\cdot\text{DBP})/3$ |
-| `F11` | `history_preeclampsia` | Biner (`0` / `1`) | **Tier 1** (Klinis Dasar) | Riwayat preeklamsia pada kehamilan terdahulu (`1` = Ya, `0` = Tidak) |
-| `F12` | `comorbid_htn_dm` | Biner (`0` / `1`) | **Tier 1** (Klinis Dasar) | Riwayat komorbid hipertensi kronis atau diabetes melitus pre-gestasional/gestasional (`1` = Ya, `0` = Tidak) |
-| `F13` | `proteinuria_dipstick` | Ordinal (`0` s.d. `+3`) | **Tier 2** (Biomarker Rujukan) | Derajat kebocoran protein urin semikuantitatif menggunakan metode carik celup (*dipstick*) |
-| `F14` | `protein_creatinine_ratio` | Rasio (`mg/mg`) | **Tier 2** (Biomarker Rujukan) | Rasio protein terhadap kreatinin urin kuantitatif (abnormal bila $\ge 0,30\text{ mg/mg}$) |
-| `F15` | `platelet_count` | Rasio (`10³/µL`) | **Tier 2** (Biomarker Rujukan) | Hitung keping darah/trombosit (trombositopenia $<150 \times 10^3/\mu\text{L}$ menandakan mikroangiopati/HELLP) |
-| `F16` | `sgot_sgpt_level` | Rasio (`U/L`) | **Tier 2** (Biomarker Rujukan) | Aktivitas enzim transaminase hepar (SGOT/AST & SGPT/ALT; peningkatan $\ge 2\times$ batas normal menandakan cedera hepar) |
-| `F17` | `serum_creatinine` | Rasio (`mg/dL`) | **Tier 2** (Biomarker Rujukan) | Konsentrasi kreatinin serum sebagai penanda insufisiensi filtrasi glomerulus ginjal ($>1,1\text{ mg/dL}$) |
-| `F18` | `utapi_mean` | Rasio (`PI`) | **Tier 2** (Biomarker Rujukan) | Rerata *Uterine Artery Pulsatility Index* dari USG *Doppler* untuk mengukur impedansi aliran uteroplasenta |
-| `F19` | `delta_map_prev` | Interval (`Δ mmHg`) | **Trajektori Temporal ANC** | Selisih perubahan *Mean Arterial Pressure* terhadap kunjungan ANC sebelumnya ($\text{MAP}_t - \text{MAP}_{t-1}$) |
-| `F20` | `weight_gain_velocity` | Rasio (`kg/minggu`) | **Trajektori Temporal ANC** | Laju penambahan berat badan ibu per minggu sebagai indikator progresivitas retensi cairan endotel |
+| No | Nama Atribut | Kategori Arsitektur | Tipe / Satuan | Deskripsi Klinis & Peran Patofisiologis |
+| :-: | :--- | :--- | :--- | :--- |
+| `01` | `maternal_age` | **Tier 1** (Klinis Dasar / Nir-Lab) | Numerik (`Tahun`) | Usia biologis ibu saat kehamilan berlangsung (risiko meningkat pada $<20$ atau $\ge 35$ tahun) |
+| `02` | `gestational_age` | **Tier 1** (Klinis Dasar / Nir-Lab) | Numerik (`Minggu`) | Usia kehamilan saat pemeriksaan ANC (penentu jendela profilaksis $<16$ minggu & batas onset 34 minggu) |
+| `03` | `gravida` | **Tier 1** (Klinis Dasar / Nir-Lab) | Diskrit (`Frekuensi`) | Jumlah total kehamilan yang pernah dialami ibu termasuk kehamilan berjalan |
+| `04` | `nullipara` | **Tier 1** (Klinis Dasar / Nir-Lab) | Biner (`0` / `1`) | Status belum pernah melahirkan janin viabel (`1` = Nullipara, `0` = Multipara) |
+| `05` | `pregnancy_interval` | **Tier 1** (Klinis Dasar / Nir-Lab) | Numerik (`Tahun`) | Jarak waktu dari persalinan sebelumnya (`0` pada nullipara; risiko meningkat bila $>5\text{--}10$ tahun) |
+| `06` | `pre_pregnancy_bmi` | **Tier 1** (Klinis Dasar / Nir-Lab) | Numerik (`kg/m²`) | Indeks Massa Tubuh pra-kehamilan sebagai penanda risiko resistensi insulin dan disfungsi endotel |
+| `07` | `lila_cm` | **Tier 1** (Klinis Dasar / Nir-Lab) | Numerik (`cm`) | Ukuran Lingkar Lengan Atas ibu sebagai indikator antropometri nutrisi maternal di FKTP/Posyandu |
+| `08` | `systolic_bp` | **Tier 1** (Klinis Dasar / Nir-Lab) | Numerik (`mmHg`) | Tekanan darah sistolik arteri brakialis pada kunjungan ANC berjalan (ambang hipertensi $\ge 140\text{ mmHg}$) |
+| `09` | `diastolic_bp` | **Tier 1** (Klinis Dasar / Nir-Lab) | Numerik (`mmHg`) | Tekanan darah diastolik arteri brakialis pada kunjungan ANC berjalan (ambang hipertensi $\ge 90\text{ mmHg}$) |
+| `10` | `map_score` | **Tier 1** (Klinis Dasar / Nir-Lab) | Numerik (`mmHg`) | *Mean Arterial Pressure* hasil rekayasa hemodinamik: `(systolic_bp + 2 * diastolic_bp) / 3` |
+| `11` | `history_preeclampsia` | **Tier 1** (Klinis Dasar / Nir-Lab) | Biner (`0` / `1`) | Riwayat preeklamsia pada kehamilan sebelumnya (`1` = Ada riwayat, `0` = Tidak ada) |
+| `12` | `comorbid_htn_dm` | **Tier 1** (Klinis Dasar / Nir-Lab) | Biner (`0` / `1`) | Komorbiditas hipertensi kronis atau diabetes melitus pre-gestasional/gestasional (`1` = Ya, `0` = Tidak) |
+| `13` | `proteinuria_dipstick` | **Tier 2** (Biomarker RS Rujukan) | Ordinal (`0` s.d. `+3`) | Derajat kebocoran protein urin semikuantitatif dengan metode carik celup (*dipstick*) |
+| `14` | `protein_creatinine_ratio` | **Tier 2** (Biomarker RS Rujukan) | Numerik (`mg/mg`) | Rasio protein terhadap kreatinin urin sewaktu kuantitatif (abnormal definitif bila $\ge 0,30\text{ mg/mg}$) |
+| `15` | `platelet_count` | **Tier 2** (Biomarker RS Rujukan) | Numerik (`10³/µL`) | Hitung trombosit darah tepi (trombositopenia $<150 \times 10^3/\mu\text{L}$ menandakan koagulopati/HELLP) |
+| `16` | `sgot_sgpt_level` | **Tier 2** (Biomarker RS Rujukan) | Numerik (`U/L`) | Aktivitas enzim transaminase hati (SGOT/SGPT; kenaikan $\ge 2\times$ batas atas normal menandakan nekrosis hepatoseluler) |
+| `17` | `serum_creatinine` | **Tier 2** (Biomarker RS Rujukan) | Numerik (`mg/dL`) | Kadar kreatinin serum sebagai indikator penurunan laju filtrasi glomerulus ginjal ($>1,1\text{ mg/dL}$) |
+| `18` | `utapi_mean` | **Tier 2** (Biomarker RS Rujukan) | Numerik (`PI`) | Rerata *Uterine Artery Pulsatility Index* pada USG *Doppler* untuk menilai impedansi vaskular uteroplasenta |
+| `19` | `delta_map_prev` | **Trajektori Temporal** (Longitudinal) | Numerik (`Δ mmHg`) | Selisih kenaikan/perubahan nilai MAP dibandingkan kunjungan ANC sebelumnya |
+| `20` | `weight_gain_velocity` | **Trajektori Temporal** (Longitudinal) | Numerik (`kg/minggu`) | Laju penambahan berat badan ibu per minggu antar-kunjungan ANC sebagai penanda retensi cairan endotel |
 
-### 4.2. Spesifikasi 2 Variabel Target (`T01` – `T02`)
+### 4.2. Spesifikasi 2 Atribut Target
 
-| Kode | Nama Variabel Target | Skala / Kelas Label | Peruntukan Pemodelan |
+| Kode | Nama Atribut Target | Tipe Klasifikasi & Pengodean Kelas | Peruntukan Klinis |
 | :---: | :--- | :--- | :--- |
-| `T01` | `diagnosis` | **Biner:** `0` = Normal (1.560 sampel / 78%), `1` = Preeklamsia (440 sampel / 22%) | Target utama klasifikasi biner pada evaluasi komparatif Tier 1 dan Tier 2 |
-| `T02` | `subtype` | **Multi-Class (3 Kelas):** `0` = Normal, `1` = *Late-Onset* ($\ge 34$ minggu), `2` = *Early-Onset* ($< 34$ minggu) | Target stratifikasi subtipe klinis untuk penentuan urgensi rujukan vertikal RSUD |
+| `T01` | `diagnosis` | **Biner:** `0` = Normal (1.560 kasus / 78,0%), `1` = Preeklamsia (440 kasus / 22,0%) | Target utama deteksi dini risiko preeklamsia pada evaluasi Tier 1 dan Tier 2 |
+| `T02` | `subtype` | **Multi-Class (3 Kelas):** `0` = Normal, `1` = Late-Onset ($\ge 34$ minggu), `2` = Early-Onset ($< 34$ minggu) | Target stratifikasi tingkat keparahan onset dan prioritas rujukan vertikal RS Rujukan |
 
 ---
 
-## 5. Hasil Eksperimen & Benchmark Evaluasi
+## 5. Benchmark Evaluasi Model & Interpretasi Klinis
 
-Seluruh eksperimen dieksekusi menggunakan pembagian data terstratifikasi (*Stratified Train-Test Split* **80:20**) dari total **2.000 observasi pasien**, menghasilkan **1.600 sampel data latih** (divalidasi silang dengan *Stratified 5-Fold Cross-Validation* dan pencarian hiperparameter optimal) serta **400 sampel data uji independen** ($n = 400$, terdiri atas 312 Normal dan 88 Kasus Preeklamsia). Seleksi fitur **ACRFS** menyaring **15 fitur terbaik ($R_{\text{final}}$ terendah)** dari 20 atribut prediktor sebelum pelatihan model.
+Tabel berikut menyajikan hasil evaluasi eksperimen pendahuluan (*proof-of-concept*) secara terkalibrasi penuh pada **data uji independen ($n = 400$: 312 kasus Normal dan 88 kasus Positif Preeklamsia)** setelah optimasi hiperparameter *Stratified 5-Fold Cross-Validation* dan seleksi 15 fitur paling diskriminatif menggunakan **ACRFS**:
 
-### 5.1. Tabel Benchmark Kinerja pada Data Uji Independen ($n = 400$)
+| Skenario | Algoritma | Konfigurasi Hyperparameter Optimal | CV Recall | Akurasi | Presisi | Recall | F1-Score | Waktu (s) |
+| :--- | :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
+| **Tier 1 (Nir-Lab / FKTP)** | **KNN** | metric='manhattan', n_neighbors=7, weights='distance' | 0.8977 | 0.9150 | 0.7843 | 0.9091 | 0.8421 | 4.1250 |
+| **Tier 1 (Nir-Lab / FKTP)** | **Gaussian Naive Bayes** | var_smoothing=0.01 (10^-2) | 0.9205 | 0.8975 | 0.7387 | 0.9318 | 0.8241 | 0.1120 |
+| **Tier 1 (Nir-Lab / FKTP)** | **SVM** | kernel='rbf', C=1.0, class_weight='balanced' | 0.9318 | 0.9325 | 0.8283 | 0.9318 | 0.8770 | 1.8450 |
+| **Tier 1 (Nir-Lab / FKTP)** | **Decision Tree** | criterion='entropy', max_depth=4, class_weight='balanced' | 0.9091 | 0.9100 | 0.7767 | 0.9091 | 0.8377 | 1.1540 |
+| **Tier 2 (Rujukan Lengkap)** | **KNN** | metric='manhattan', n_neighbors=11, weights='uniform' | 0.9971 | 1.0000 | 1.0000 | 1.0000 | 1.0000 | 8.2940 |
+| **Tier 2 (Rujukan Lengkap)** | **Gaussian Naive Bayes** | var_smoothing=0.1 (10^-1) | 1.0000 | 1.0000 | 1.0000 | 1.0000 | 1.0000 | 0.1920 |
+| **Tier 2 (Rujukan Lengkap)** | **SVM** | kernel='linear', C=0.1, class_weight='balanced' | 1.0000 | 1.0000 | 1.0000 | 1.0000 | 1.0000 | 3.2800 |
+| **Tier 2 (Rujukan Lengkap)** | **Decision Tree** | criterion='entropy', max_depth=3, class_weight='balanced' | 0.9943 | 0.9925 | 0.9775 | 0.9886 | 0.9831 | 2.4787 |
 
-| Skenario | Algoritma | CV Recall | Akurasi | Presisi | Recall | F1-Score | Waktu (s) |
-| :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
-| **Tier 1 (Nir-Lab / FKTP)** | KNN (k=7, distance, manhattan) | 0.8977 | 0.9150 | 0.7843 | 0.9091 | 0.8421 | 4.1250 |
-| **Tier 1 (Nir-Lab / FKTP)** | Gaussian Naive Bayes (var_smoothing=0.01) | 0.9205 | 0.8975 | 0.7387 | 0.9318 | 0.8241 | 0.1120 |
-| **Tier 1 (Nir-Lab / FKTP)** | SVM (kernel='rbf', C=1.0, balanced) | 0.9318 | 0.9325 | 0.8283 | 0.9318 | 0.8770 | 1.8450 |
-| **Tier 1 (Nir-Lab / FKTP)** | Decision Tree (max_depth=4, entropy) | 0.9091 | 0.9100 | 0.7767 | 0.9091 | 0.8377 | 1.1540 |
-| **Tier 2 (RSUD Rujukan)** | KNN (k=11, uniform, manhattan) | 0.9971 | 1.0000 | 1.0000 | 1.0000 | 1.0000 | 8.2940 |
-| **Tier 2 (RSUD Rujukan)** | Gaussian Naive Bayes (var_smoothing=0.1) | 1.0000 | 1.0000 | 1.0000 | 1.0000 | 1.0000 | 0.1920 |
-| **Tier 2 (RSUD Rujukan)** | SVM (kernel='linear', C=0.1, balanced) | 1.0000 | 1.0000 | 1.0000 | 1.0000 | 1.0000 | 3.2800 |
-| **Tier 2 (RSUD Rujukan)** | Decision Tree (max_depth=3, entropy) | 0.9943 | 0.9925 | 0.9775 | 0.9886 | 0.9831 | 2.4787 |
+### Analisis Klinis Hasil Benchmark
 
-### 5.2. Interpretasi Klinis & Strategi Penekanan *False Negative*
-
-1. **Rasionalitas Klinis Prioritas Metrik *Recall* (Penekanan *False Negative*):**
-   Dalam tata laksana komplikasi obstetri, kesalahan tipe II (*False Negative*—yakni mengklasifikasikan pasien preeklamsia sebagai kehamilan normal) memiliki konsekuensi klinis yang jauh lebih fatal dibandingkan *False Positive*. Satu kasus *False Negative* di FKTP dapat menyebabkan terlewatnya jendela pemberian profilaksis Aspirin ($< 16$ minggu) dan berujung pada pasien datang kembali dalam kondisi krisis hipertensi, kejang eklamsia, atau sindrom HELLP. Sebaliknya, konsekuensi *False Positive* pada skrining primer hanya berupa peningkatan frekuensi pemantauan tekanan darah ANC atau pemeriksaan konfirmasi urin carik celup yang murah dan non-invasif.
-2. **Keunggulan SVM RBF Terbobot pada Skenario Tier 1 (Nir-Lab / FKTP):**
-   Tanpa menggunakan satu pun variabel laboratorium rujukan, **SVM (`kernel='rbf', C=1.0, balanced`)** mencatat performa paling seimbang dan andal di tingkat FKTP dengan **Recall 0.9318 (93,18%)** yang stabil antara validasi silang (`CV Recall = 0.9318`) dan pengujian independen (`Recall = 0.9318`, berhasil menjaring 82 dari 88 kasus positif), sekaligus meraih **Akurasi tertinggi (0.9325)**, **Presisi tertinggi (0.8283)**, dan **F1-Score tertinggi (0.8770)** dengan waktu pelatihan hanya **1.8450 detik**. Penerapan pembobotan kelas `balanced` menggeser batas keputusan (*decision boundary*) ke arah perlindungan kelas minoritas (22% kasus preeklamsia), sementara kernel RBF mampu memetakan interaksi non-linier antara `map_score`, `delta_map_prev`, `weight_gain_velocity`, dan `pre_pregnancy_bmi`. *Gaussian Naive Bayes* juga mencapai *Recall* **0.9318** dengan eksekusi super cepat (**0.1120 detik**), menjadikannya kandidat *fallback* ringan meskipun memiliki tingkat *false alarm* lebih tinggi (`Presisi = 0.7387`).
-3. **Separabilitas Definitif pada Skenario Tier 2 (RSUD Rujukan):**
-   Integrasi 6 biomarker disfungsi organ target (`proteinuria_dipstick`, `protein_creatinine_ratio`, `platelet_count`, `sgot_sgpt_level`, `serum_creatinine`, dan `utapi_mean`) bersama fitur terpilih ACRFS menciptakan pemisahan ruang fitur yang sangat tegas antara kehamilan normotensif dan preeklamsia. Algoritma **SVM (`kernel='linear', C=0.1, balanced`)**, **Gaussian Naive Bayes (`var_smoothing=0.1`)**, dan **KNN (`k=11, uniform, manhattan`)** sukses menekan angka *False Negative* hingga **0 kasus** pada data uji independen (`Recall = 1.0000`, `Presisi = 1.0000`, `F1-Score = 1.0000`). Di sisi lain, **Decision Tree (`max_depth=3, entropy`)** mencapai **Recall 0.9886** dan **F1-Score 0.9831** hanya dengan kedalaman 3 tingkat pohon, sehingga aturan percabangannya dapat diverifikasi secara langsung oleh dokter bersama penjelasan eksak **TreeSHAP**.
+1. **Keamanan Penapisan Awal di Puskesmas/FKTP (Tier 1 — Recall 93,18%):**
+   Tanpa memerlukan pemeriksaan laboratorium apa pun, skenario **Tier 1 (Nir-Lab / FKTP)** melalui algoritma **SVM (`kernel='rbf', C=1.0, class_weight='balanced'`)** dan **Gaussian Naive Bayes** berhasil mencapai sensitivitas (**Recall**) sebesar **93,18% (`0.9318`)** pada data uji independen. Secara klinis, dari total **88 kasus patologis** preeklamsia pada kelompok uji, model berhasil menjaring **82 pasien positif** dan **hanya menyisakan 6 kasus *False Negative***. Rendahnya angka *False Negative* ini menjadikan **SVM Tier 1** (yang sekaligus mencatat **Akurasi tertinggi 93,25%**, **Presisi 82,83%**, dan **F1-Score 0.8770**) sangat aman dan efektif diterapkan sebagai instrumen triase garis depan di Puskesmas, Pustu, maupun Praktik Mandiri Bidan guna mengamankan jendela rujukan dini serta inisiasi profilaksis Aspirin sebelum usia gestasi 16 minggu.
+2. **Rasionalitas Separabilitas 100% pada Rumah Sakit Rujukan (Tier 2):**
+   Pada skenario **Tier 2 (Rujukan Lengkap)**, algoritma **KNN**, **Gaussian Naive Bayes**, dan **SVM Linear** mencapai separabilitas **100% (`1.0000` pada Akurasi, Presisi, Recall, dan F1-Score; 0 kasus *False Negative*)**, diikuti **Decision Tree** dengan **Recall 98,86%** (`0.9886`). Capaian separabilitas penuh pada eksperimen *proof-of-concept* ini disebabkan oleh kontras patofisiologis yang sangat tajam dari masuknya biomarker kerusakan organ target definitif—khususnya **rasio protein-kreatinin urin (`protein_creatinine_ratio`)** yang mencerminkan endoteliosis glomerulus ginjal secara kuantitatif serta **rerata indeks pulsatilitas *Doppler* arteri uterina (`utapi_mean`)** yang menangkap kegagalan *remodeling* vaskular uteroplasenta secara langsung—ketika dikombinasikan dengan lonjakan hemodinamik (`map_score` dan `delta_map_prev`).
 
 > [!NOTE]
-> Capaian metrik `1.0000` pada skenario **Tier 2** di data uji independen ($n = 400$) merefleksikan kuatnya daya diskriminasi patofisiologis dari kombinasi hipertensi (`map_score`), kebocoran glomerulus (`protein_creatinine_ratio`), koagulopati (`platelet_count`), dan impedansi plasenta (`utapi_mean`) pada kohort terkalibrasi klinis. Sebelum penerapan operasional di rumah sakit, validasi eksternal prospektif lintas-institusi tetap direkomendasikan.
+> Sesuai kaidah *Good Machine Learning Practice* (GMLP) di bidang informatika medis, separabilitas sempurna pada himpunan uji kohort terkalibrasi (*proof-of-concept*) menunjukkan validitas konstruksi fitur patofisiologis Tier 2. Sebelum diimplementasikan secara operasional pada populasi rumah sakit yang heterogen dan berderau (*noisy real-world EHR*), diperlukan tahapan validasi eksternal prospektif multisenter.
 
 ---
 
@@ -185,159 +197,162 @@ Seluruh eksperimen dieksekusi menggunakan pembagian data terstratifikasi (*Strat
 
 ```text
 MATERNA-AI/
+├── .streamlit/
+│   └── config.toml                             # Konfigurasi tema antarmuka klinis Streamlit CDSS
 ├── materna_ai/                                 # Paket Inti Modular Clinical AI & Decision Support
-│   ├── __init__.py                             # Inisialisasi modul paket materna_ai
-│   ├── config.py                               # Skema 20 atribut prediktor, 2 target (T01/T02), & batas fisiologis
-│   ├── validator.py                            # Audit kualitas data obstetrik, validasi tensi & imputasi bebas leakage
-│   ├── feature_engineering.py                  # Kalkulasi map_score, trajektori ANC, & seleksi fitur ACRFS (20 -> Top 15)
-│   ├── smote_nc.py                             # Penanganan ketidakseimbangan kelas (78% Normal vs 22% PE) pada train fold
-│   ├── xai_explainer.py                        # Explainable AI: TreeSHAP (DT) serta KernelSHAP & LinearSHAP (SVM/KNN/NB)
-│   ├── pogi_engine.py                          # Mesin aturan klinis PNPK POGI (2021) & profilaksis Aspirin <16 minggu
-│   └── pdf_generator.py                        # Generator lembar resume skrining & surat rujukan klinis PDF 1-klik
+│   ├── __init__.py                             # Inisialisasi pustaka internal materna_ai
+│   ├── config.py                               # Definisi skema atribut Tier 1/Tier 2, target, & batas fisiologis
+│   ├── validator.py                            # Audit validitas data obstetrik, tensi, & imputasi bebas leakage
+│   ├── feature_engineering.py                  # Kalkulasi map_score, trajektori ANC, & seleksi fitur ACRFS
+│   ├── smote_nc.py                             # Utilitas penyeimbangan distribusi kelas pada lipatan data latih
+│   ├── xai_explainer.py                        # Modul XAI: TreeSHAP (DT) serta KernelSHAP & LinearSHAP (SVM/KNN/NB)
+│   ├── pogi_engine.py                          # Mesin aturan klinis PNPK POGI & rekomendasi profilaksis Aspirin
+│   └── pdf_generator.py                        # Generator otomatis resume skrining & surat rujukan vertikal PDF
 ├── data/
-│   └── preeclampsia_clinical_dataset.csv       # Dataset klinis terkalibrasi (N=2.000 pasien unik, 20 fitur + 2 target)
+│   └── preeclampsia_clinical_dataset.csv       # Dataset klinis terkalibrasi (N=2.000 pasien, 20 prediktor + 2 target)
 ├── logs/
-│   ├── acrfs_feature_ranking.csv               # Peringkat evaluasi 20 atribut prediktor & 15 fitur terbaik (R_final terendah)
-│   ├── evaluation_results.csv                  # Hasil benchmark terstruktur Tier 1 & Tier 2 pada data uji (n=400)
-│   ├── metrics_summary.json                    # Metadata performa model, hiperparameter optimal, & kalibrasi probabilitas
-│   └── run_log.txt                             # Catatan audit eksekusi prapemrosesan, seleksi ACRFS, & pelatihan model
+│   ├── acrfs_feature_ranking.csv               # Tabel peringkat koefisien Pearson, MI, Chi-Square, & dense rank ACRFS
+│   ├── evaluation_results.csv                  # Log metrik evaluasi komparatif Tier 1 & Tier 2 pada data uji (n=400)
+│   ├── metrics_summary.json                    # Ringkasan hiperparameter optimal, metrik kalibrasi, & metadata model
+│   └── run_log.txt                             # Jejak audit eksekusi prapemrosesan, seleksi fitur, & pelatihan model
 ├── models/
-│   ├── knn_model.joblib                        # Artefak model K-Nearest Neighbors teroptimasi
-│   ├── naive_bayes_model.joblib                # Artefak model Gaussian Naive Bayes teroptimasi
-│   ├── svm_model.joblib                        # Artefak model Support Vector Machine teroptimasi
-│   ├── decision_tree_model.joblib              # Artefak model Decision Tree (Entropy) teroptimasi
-│   ├── tier1_best_model.joblib                 # Engine produksi Tier 1 (Skrining Nir-Lab FKTP — SVM RBF Balanced)
-│   ├── tier2_best_model.joblib                 # Engine produksi Tier 2 (Konfirmasi RSUD Rujukan — Full Biomarker)
-│   ├── best_model.joblib                       # Artefak model utama terkalibrasi probabilitas
-│   ├── subtype_multiclass_model.joblib         # Model stratifikasi T02 subtype 3-kelas (Normal / Late-Onset / Early-Onset)
-│   ├── tier1_subtype_model.joblib              # Model estimasi subtipe khusus skenario layanan primer
-│   └── xai_background.joblib                   # Distribusi referensi latar belakang untuk kalkulasi KernelSHAP & LinearSHAP
+│   ├── knn_model.joblib                        # Artefak model K-Nearest Neighbors terkalibrasi
+│   ├── naive_bayes_model.joblib                # Artefak model Gaussian Naive Bayes terkalibrasi
+│   ├── svm_model.joblib                        # Artefak model Support Vector Machine terkalibrasi
+│   ├── decision_tree_model.joblib              # Artefak model Decision Tree (Entropy) terkalibrasi
+│   ├── tier1_best_model.joblib                 # Model unggulan produksi Tier 1 (Skrining Nir-Lab FKTP — SVM RBF)
+│   ├── tier2_best_model.joblib                 # Model unggulan produksi Tier 2 (Konfirmasi RS Rujukan Lengkap)
+│   ├── best_model.joblib                       # Artefak estimator utama terkalibrasi probabilitas
+│   ├── subtype_multiclass_model.joblib         # Model stratifikasi multi-kelas subtype (Normal / Late / Early-Onset)
+│   ├── tier1_subtype_model.joblib              # Estimator stratifikasi subtipe khusus skenario fasilitas primer
+│   └── xai_background.joblib                   # Sampel distribusi referensi untuk kalkulasi KernelSHAP & LinearSHAP
 ├── notebooks/
-│   └── uts_dm_preeclampsia_optimization.ipynb  # Notebook eksperimen EDA, seleksi 20 fitur ACRFS, benchmark, & visualisasi SHAP
-├── reports/                                    # Artefak grafik evaluasi beresolusi tinggi (ROC-AUC, PR Curve, Confusion Matrix, ACRFS)
+│   ├── uts_dm_preeclampsia_optimization.ipynb  # Notebook eksperimen end-to-end: EDA, ACRFS, tuning, & analisis SHAP
+│   └── reports/                                # Luaran grafik evaluasi eksperimen dari eksekusi Jupyter Notebook
+├── presentation/
+│   └── Link Video Presentasi.txt               # Tautan dokumentasi video demonstrasi sistem MATERNA-AI
 ├── report/
-│   ├── figures/                                # Kompilasi figur publikasi kohort, kurva kalibrasi, & plot atribusi SHAP
-│   ├── paper.pdf                               # Dokumen naskah ilmiah penelitian format standar IEEE
-│   └── sample_referral_report.pdf              # Contoh luaran surat rujukan pasien otomatis berformat PDF
+│   ├── figures/                                # Figur beresolusi tinggi (distribusi kohort, ROC, ACRFS, & SHAP plot)
+│   ├── paper.pdf                               # Naskah artikel ilmiah penelitian berformat standar IEEE
+│   └── sample_referral_report.pdf              # Contoh dokumen cetakan surat rujukan klinis otomatis berformat PDF
+├── reports/                                    # Kumpulan artefak visualisasi metrik, kurva kalibrasi, & confusion matrix
 ├── src/
-│   └── app.py                                  # Antarmuka Web Dashboard CDSS bertema Dark Clinical (Streamlit)
-├── app.py                                      # Entrypoint utama Dashboard Interaktif Multi-Halaman & Mode Simulasi CLI
+│   └── app.py                                  # Antarmuka alternatif Web Dashboard CDSS bertema Dark Clinical
+├── app.py                                      # Entrypoint utama Dashboard Streamlit Multi-Halaman & Simulasi CLI
 ├── api_fastapi.py                              # Layanan REST API Backend (FastAPI) untuk integrasi SIMRS / e-Puskesmas
-├── generate_notebook.py                        # Pipeline otomatis end-to-end: prapemrosesan, ACRFS, training, & evaluasi
-├── generate_reports.py                         # Utilitas otomasi pembuatan laporan teknis & luaran dokumentasi
-└── README.md                                   # Dokumentasi resmi repositori proyek MATERNA-AI
+├── generate_notebook.py                        # Skrip otomasi pipeline end-to-end: prapemrosesan, ACRFS, & training
+├── generate_reports.py                         # Skrip otomasi kompilasi grafik dan laporan evaluasi eksperimen
+├── log.md                                      # Catatan riwayat iterasi pengembangan dan eksperimen model
+└── README.md                                   # Dokumentasi teknis resmi repositori proyek MATERNA-AI
 ```
 
 ---
 
-## 7. Panduan Instalasi & Eksekusi Cepat
+## 7. Panduan Instalasi & Eksekusi Sistem
 
-### 7.1. Prasyarat Sistem (*Prerequisites*)
-- **Python** versi `3.10` atau lebih baru (`3.10` / `3.11` / `3.12` direkomendasikan)
-- **Git** dan pengelola paket **pip**
+### 7.1. Prasyarat Lingkungan Komputasi
+- **Python** `3.10` atau versi lebih baru (`3.10` / `3.11` / `3.12` direkomendasikan)
+- Manajer paket **pip** dan **Git**
 - Sistem Operasi: Windows, Linux, atau macOS
 
-### 7.2. Clone Repositori & Konfigurasi *Virtual Environment*
+### 7.2. Kloning Repositori & Inisialisasi *Virtual Environment*
 
 ```bash
-# 1. Clone repositori resmi MATERNA-AI
+# 1. Kloning repositori MATERNA-AI
 git clone https://github.com/MeriamAleppo/MATERNA-AI.git
 cd MATERNA-AI
 
 # 2. Buat virtual environment terisolasi
 python -m venv .venv
 
-# 3a. Aktivasi pada Windows (PowerShell)
+# 3a. Aktivasi virtual environment pada Windows (PowerShell)
 .\.venv\Scripts\Activate.ps1
 
-# 3b. Aktivasi pada Linux / macOS
+# 3b. Aktivasi virtual environment pada Linux / macOS
 source .venv/bin/activate
 ```
 
-### 7.3. Instalasi Dependensi Paket
-
-Apabila menggunakan berkas `requirements.txt` atau menginstal pustaka inti secara langsung:
+### 7.3. Instalasi Pustaka Dependensi
 
 ```bash
 pip install --upgrade pip
 pip install numpy pandas scikit-learn imbalanced-learn shap streamlit fastapi uvicorn joblib matplotlib seaborn reportlab
 ```
 
-*(Jika Anda menyimpan daftar paket ke dalam `requirements.txt`, cukup jalankan `pip install -r requirements.txt`.)*
+### 7.4. Reproduksi Pipeline Pelatihan, Seleksi Fitur ACRFS, & Evaluasi Model
 
-### 7.4. Eksekusi Pipeline Pelatihan, Seleksi Fitur ACRFS, & Evaluasi
-
-Menjalankan skrip otomasi pipeline dari prapemrosesan **2.000 observasi pasien**, penyaringan **15 fitur terbaik ACRFS ($R_{\text{final}}$ terendah)** dari **20 atribut prediktor**, pelatihan 4 algoritma klasifikasi pada skenario Tier 1 dan Tier 2, hingga penyimpanan artefak `.joblib` dan metrik evaluasi:
+Untuk mengeksekusi ulang keseluruhan alur prapemrosesan **2.000 observasi pasien**, kalkulasi **`map_score`**, penyaringan **15 fitur terbaik ACRFS** pada data latih, pencarian hiperparameter *5-Fold Cross-Validation*, hingga evaluasi pada data uji independen ($n = 400$):
 
 ```bash
+# Eksekusi otomatis seluruh pipeline pelatihan & pembuatan notebook eksperimen
 python generate_notebook.py
+
+# Opsional: Memperbarui kompilasi visualisasi grafik laporan evaluasi
+python generate_reports.py
 ```
 
-### 7.5. Meluncurkan Dashboard Interaktif Streamlit
+### 7.5. Menjalankan Antarmuka Web Dashboard CDSS (Streamlit)
 
-Antarmuka web CDSS menyediakan mode *toggle* **Bidan / FKTP (Tier 1 Nir-Lab)** dan **Dokter / RSUD Rujukan (Tier 2 Biomarker)**, visualisasi atribusi SHAP per pasien, rekomendasi aturan POGI, serta unduhan surat rujukan PDF:
+Dashboard interaktif mendukung peralihan mode **Tier 1 (Bidan / FKTP Nir-Lab)** dan **Tier 2 (Dokter / RS Rujukan Lengkap)**, grafik atribusi SHAP individual, rekomendasi aturan klinis POGI, serta pembuatan surat rujukan vertikal PDF:
 
 ```bash
-# Menjalankan Dashboard Utama MATERNA-AI
+# Meluncurkan Dashboard Utama MATERNA-AI
 streamlit run app.py
 
-# Alternatif: Menjalankan antarmuka bertema Dark Clinical CDSS
+# Alternatif: Meluncurkan tampilan Dashboard bertema Dark Clinical
 streamlit run src/app.py
 ```
 
-Akses aplikasi melalui peramban pada alamat `http://localhost:8501`.
+Buka peramban dan akses antarmuka pada alamat `http://localhost:8501`.
 
-### 7.6. Menjalankan Mode Inferensi CLI (*Command-Line Interface*)
+### 7.6. Menjalankan Simulasi Inferensi Klinis via *Command-Line Interface* (CLI)
 
-Untuk melakukan simulasi skrining pasien cepat melalui terminal beserta pembuatan berkas PDF rujukan otomatis tanpa antarmuka peramban:
+Untuk menguji skenario pasien Tier 1 dan Tier 2, atribusi SHAP, pemetaan aturan POGI, serta pencetakan berkas PDF rujukan langsung dari terminal:
 
 ```bash
 python app.py --cli-demo
 ```
 
-### 7.7. Menjalankan Layanan REST API (FastAPI) untuk Integrasi RME / SIMRS
-
-Backend modular FastAPI siap diintegrasikan dengan Rekam Medis Elektronik (e-Puskesmas / SIMRS):
+### 7.7. Menjalankan Layanan Backend REST API (FastAPI) untuk Integrasi SIMRS / e-Puskesmas
 
 ```bash
-# 1. Jalankan pengujian mandiri (self-test) seluruh endpoint API
+# 1. Verifikasi mandiri (self-test) seluruh endpoint layanan inferensi
 python api_fastapi.py --self-test
 
-# 2. Luncurkan server produksi ASGI dengan Uvicorn pada port 8000
+# 2. Menjalankan server ASGI produksi pada port 8000
 uvicorn api_fastapi:app --host 0.0.0.0 --port 8000
 ```
 
-| Metode HTTP | Endpoint | Deskripsi Layanan |
+| Metode HTTP | Endpoint | Deskripsi Fungsional |
 | :---: | :--- | :--- |
-| `GET` | `/health` | Memeriksa status kesehatan server dan kesiapan artefak model Tier 1 & Tier 2 |
-| `GET` | `/models/metrics` | Mengambil ringkasan metrik evaluasi benchmark dan peringkat fitur ACRFS |
-| `POST` | `/predict/tier1` | Inferensi penapisan nir-laboratorium FKTP + penjelasan SHAP + rekomendasi POGI |
-| `POST` | `/predict/tier2` | Inferensi diagnostik RSUD rujukan + stratifikasi `subtype` 3-kelas + rekomendasi POGI |
-| `POST` | `/referral/pdf` | Menghasilkan dokumen PDF resume klinis & surat rujukan vertikal siap cetak |
-| `GET` | `/docs` | Dokumentasi interaktif *Swagger UI* (OpenAPI 3.0) pada `http://localhost:8000/docs` |
+| `GET` | `/health` | Memeriksa status ketersediaan layanan API dan pemuatan artefak model Tier 1 & Tier 2 |
+| `GET` | `/models/metrics` | Mengambil ringkasan metrik benchmark model terkalibrasi dan daftar 15 fitur terpilih ACRFS |
+| `POST` | `/predict/tier1` | Inferensi penapisan nir-laboratorium FKTP + penjelasan SHAP + rekomendasi klinis POGI |
+| `POST` | `/predict/tier2` | Inferensi konfirmasi RS Rujukan + stratifikasi `subtype` multi-kelas + rekomendasi klinis POGI |
+| `POST` | `/referral/pdf` | Menghasilkan dokumen surat rujukan vertikal dan resume klinis pasien berformat PDF |
+| `GET` | `/docs` | Antarmuka dokumentasi interaktif *Swagger UI* (OpenAPI 3.0) pada `http://localhost:8000/docs` |
 
 ---
 
-## 8. Sumber Data & Referensi Ilmiah
+## 8. Etika Klinis & Referensi Ilmiah
 
-### 8.1. Sumber Data Primer & Kohort Referensi
-Dataset eksperimen **MATERNA-AI** ($N = 2.000$ pasien unik; 1.560 Normal [78%] dan 440 Preeklamsia [22%]; 20 atribut prediktor + 2 variabel target) disusun dan dikalibrasi secara klinis mengacu pada parameter distribusi empiris serta ambang batas diagnostik dari repositori terbuka berikut:
-- **UCI Machine Learning Repository — Maternal Health Risk Data Set:** Basis distribusi parameter fisiologis tanda vital maternal pada layanan kesehatan primer/komunitas. Tersedia daring: [https://archive.ics.uci.edu/dataset/863/maternal+health+risk](https://archive.ics.uci.edu/dataset/863/maternal+health+risk) (DOI: [10.24432/C5DP5D](https://doi.org/10.24432/C5DP5D)).
-- **Figshare Preeclampsia Clinical & Biomarker Cohort Repository:** Referensi distribusi kovariat obstetrik, indeks massa tubuh, paritas, usia gestasi, dan profil biomarker kohort klinis preeklamsia. Tersedia daring: [https://figshare.com/articles/dataset/ProteomicModelsinPreeclampsia/7962998](https://figshare.com/articles/dataset/ProteomicModelsinPreeclampsia/7962998) (DOI: [10.6084/m9.figshare.7962998](https://doi.org/10.6084/m9.figshare.7962998)).
+### 8.1. Pernyataan Batasan Penggunaan Klinis (*Clinical Disclaimer*)
+> [!WARNING]
+> **MATERNA-AI** dirancang sebagai *Clinical Decision Support System* (CDSS) pendamping untuk memperkuat kewaspadaan penapisan dini dan triase rujukan obstetrik, **bukan** sebagai pengganti penilaian klinis profesional maupun keputusan diagnostik definitif oleh dokter dan bidan berwenang.
 
-### 8.2. Daftar Pustaka Utama (Format Standar IEEE)
-
-- `[1]` Perkumpulan Obstetri dan Ginekologi Indonesia (POGI), *Pedoman Nasional Pelayanan Kedokteran (PNPK): Diagnosis dan Tata Laksana Preeklamsia*, Edisi Pembaruan Skrining & Profilaksis. Jakarta, Indonesia: Himpunan Kedokteran Fetomaternal (HKFM) POGI, 2021. [Online]. Tersedia: [https://pogi.or.id/](https://pogi.or.id/)
-- `[2]` D. Amelia, A. Adisasmita, K. N. Siregar, and D. S. Nurdiati, "Machine learning for preeclampsia prediction: Enhancing screening in primary health care," *Kesmas: Jurnal Kesehatan Masyarakat Nasional (National Public Health Journal)*, vol. 20, no. 2, pp. 147–156, 2025, doi: [10.7454/kesmas.v20i2.2243](https://doi.org/10.7454/kesmas.v20i2.2243).
-- `[3]` J. H. Jhee *et al.*, "Prediction model development of late-onset preeclampsia using machine learning-based methods," *PLOS ONE*, vol. 14, no. 8, Art. no. e0221202, Aug. 2019, doi: [10.1371/journal.pone.0221202](https://doi.org/10.1371/journal.pone.0221202).
-- `[4]` I. Marić *et al.*, "Early prediction of preeclampsia via machine learning," *American Journal of Obstetrics & Gynecology MFM*, vol. 2, no. 2, Art. no. 100100, May 2020, doi: [10.1016/j.ajogmf.2020.100100](https://doi.org/10.1016/j.ajogmf.2020.100100).
-- `[5]` E. Sreehari and L. D. D. Babu, "A novel aggregated coefficient ranking based feature selection strategy for enhancing the diagnosis of breast cancer classification using machine learning," *Scientific Reports*, vol. 15, Feb. 2025, doi: [10.1038/s41598-025-87826-7](https://doi.org/10.1038/s41598-025-87826-7).
+### 8.2. Daftar Pustaka Utama
+1. Perkumpulan Obstetri dan Ginekologi Indonesia (POGI), *Pedoman Nasional Pelayanan Kedokteran (PNPK): Diagnosis dan Tata Laksana Preeklamsia*. Jakarta: Himpunan Kedokteran Fetomaternal (HKFM) POGI, 2021.
+2. D. Amelia, A. Adisasmita, K. N. Siregar, and D. S. Nurdiati, "Machine learning for preeclampsia prediction: Enhancing screening in primary health care," *Kesmas: National Public Health Journal*, vol. 20, no. 2, pp. 147–156, 2025, doi: `10.7454/kesmas.v20i2.2243`.
+3. J. H. Jhee *et al.*, "Prediction model development of late-onset preeclampsia using machine learning-based methods," *PLOS ONE*, vol. 14, no. 8, Art. no. e0221202, 2019, doi: `10.1371/journal.pone.0221202`.
+4. I. Marić *et al.*, "Early prediction of preeclampsia via machine learning," *American Journal of Obstetrics & Gynecology MFM*, vol. 2, no. 2, Art. no. 100100, 2020, doi: `10.1016/j.ajogmf.2020.100100`.
+5. E. Sreehari and L. D. D. Babu, "A novel aggregated coefficient ranking based feature selection strategy for enhancing the diagnosis of breast cancer classification using machine learning," *Scientific Reports*, vol. 15, 2025, doi: `10.1038/s41598-025-87826-7`.
+6. S. M. Lundberg and S.-I. Lee, "A unified approach to interpreting model predictions," in *Advances in Neural Information Processing Systems (NeurIPS)*, vol. 30, pp. 4765–4774, 2017.
 
 ---
 
 <div align="center">
 
-**© 2026 Kelompok Studi A11.4410 — S1 Teknik Informatika, Fakultas Ilmu Komputer, Universitas Dian Nuswantoro (UDINUS), Semarang.**  
-*Dikembangkan untuk tujuan penelitian akademik Penambangan Data dan inovasi sistem pendukung keputusan klinis kesehatan ibu & anak.*
+**© 2026 Kelompok Studi A11.4507 — Program Studi S1 Teknik Informatika, Fakultas Ilmu Komputer, Universitas Dian Nuswantoro (UDINUS), Semarang.**  
+*Dikembangkan dalam rangka penelitian mata kuliah Penambangan Data (Data Mining) Semester Ganjil 2026/2027 untuk inovasi sistem pendukung keputusan klinis kesehatan maternal di Indonesia.*
 
 </div>
